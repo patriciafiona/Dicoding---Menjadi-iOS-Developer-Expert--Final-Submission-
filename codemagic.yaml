@@ -9,17 +9,25 @@ workflows:
           XCODE_WORKSPACE : "Gametopia/Gametopia.xcworkspace" # Isikan nama workspace Anda.
           XCODE_SCHEME: "Gametopia" # Isikan nama scheme project Anda.
     scripts:
-      - name: Run tests
-        script: |
-          xcodebuild \
-          -workspace "$XCODE_WORKSPACE" \
-          -scheme "$XCODE_SCHEME" \
-          -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.1' \
-          clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO          
+      - name: iOS test
+        script: | 
+          xcode-project run-tests \
+            --workspace "$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME" \
+            --device "iPhone 12"
+      test_report: build/ios/test/*.xml
+    # scripts:
+    #   - name: Run tests
+    #     script: |
+    #       xcodebuild \
+    #       -project "$XCODE_PROJECT" \
+    #       -scheme "$XCODE_SCHEME" \
+    #       -sdk iphonesimulator \
+    #       -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.1' \
+    #       clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO          
       - name: Build debug app
         script: |
-          xcodebuild build -project "$XCODE_WORKSPACE" \
+          xcodebuild build -project "$XCODE_PROJECT" \
           -scheme "$XCODE_SCHEME" \
           CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO          
     artifacts:
