@@ -1,0 +1,13 @@
+#Ignore API Key & Zip files Files in Submission 1
+
+**/SecretKeys.swift
+**/Gametopia.zip
+
+# Ignore info.plist
+*Info.plist
+
+# Cocoapods
+**/Pods/
+
+# Link.txt
+**/link.txt
