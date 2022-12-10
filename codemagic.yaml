@@ -15,16 +15,6 @@ workflows:
             --workspace "$XCODE_WORKSPACE" \
             --scheme "$XCODE_SCHEME" \
             --device "iPhone 12"
-      test_report: build/ios/test/*.xml
-    # scripts:
-    #   - name: Run tests
-    #     script: |
-    #       xcodebuild \
-    #       -project "$XCODE_PROJECT" \
-    #       -scheme "$XCODE_SCHEME" \
-    #       -sdk iphonesimulator \
-    #       -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.1' \
-    #       clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO          
       - name: Build debug app
         script: |
           xcodebuild build -project "$XCODE_PROJECT" \
