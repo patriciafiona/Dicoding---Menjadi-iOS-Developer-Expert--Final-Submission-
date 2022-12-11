@@ -26,8 +26,6 @@ struct GameItem: View {
                     .resizable()
                     .scaledToFit()
             }
-            .setProcessor(ResizingImageProcessor(referenceSize: CGSize(width: 500 * scale, height: 500 * scale), mode: .aspectFit))
-            .onSuccess { r in print("success: \(r)") }
             .cacheOriginalImage()
             .resizable()
             .clipped()

@@ -11,6 +11,8 @@
 		F78692822944A7CD0063A717 /* GametopiaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78692812944A7CD0063A717 /* GametopiaTests.swift */; };
 		F786928C2944A7CD0063A717 /* GametopiaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F786928B2944A7CD0063A717 /* GametopiaUITests.swift */; };
 		F786928E2944A7CD0063A717 /* GametopiaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F786928D2944A7CD0063A717 /* GametopiaUITestsLaunchTests.swift */; };
+		F78DEBB129457FCC009F8575 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = F78DEBB029457FCC009F8575 /* Realm */; };
+		F78DEBB329457FCC009F8575 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F78DEBB229457FCC009F8575 /* RealmSwift */; };
 		F7B320722944AFF800D58B80 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B3200F2944AFF800D58B80 /* SplashView.swift */; };
 		F7B320732944AFF800D58B80 /* DiscoveryByRatingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B320122944AFF800D58B80 /* DiscoveryByRatingPresenter.swift */; };
 		F7B320742944AFF800D58B80 /* DiscoveryByRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B320142944AFF800D58B80 /* DiscoveryByRatingView.swift */; };
@@ -75,8 +77,6 @@
 		F7B320AF2944AFF800D58B80 /* MyFavoriteInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B320702944AFF800D58B80 /* MyFavoriteInteractor.swift */; };
 		F7B320B02944AFF800D58B80 /* DetailGenreInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B320712944AFF800D58B80 /* DetailGenreInteractor.swift */; };
 		F7B320B32944B0CA00D58B80 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = F7B320B22944B0CA00D58B80 /* Lottie */; };
-		F7B320B62944B0DE00D58B80 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = F7B320B52944B0DE00D58B80 /* Realm */; };
-		F7B320B82944B0DE00D58B80 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F7B320B72944B0DE00D58B80 /* RealmSwift */; };
 		F7B320BB2944B0F500D58B80 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = F7B320BA2944B0F500D58B80 /* SkeletonUI */; };
 		F7B320BE2944B11100D58B80 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F7B320BD2944B11100D58B80 /* Kingfisher */; };
 		F7B320C12944B12F00D58B80 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F7B320C02944B12F00D58B80 /* Alamofire */; };
@@ -89,6 +89,7 @@
 		F7B320CA2944B2FB00D58B80 /* no_result.json in Resources */ = {isa = PBXBuildFile; fileRef = F7B318922944AEB000D58B80 /* no_result.json */; };
 		F7B320CB2944B30C00D58B80 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F78692772944A7CD0063A717 /* Preview Assets.xcassets */; };
 		F7B320CC2944B31700D58B80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7B320C22944B1E200D58B80 /* Assets.xcassets */; };
+		F7B320D529456FE700D58B80 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = F7B320D429456FE700D58B80 /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -189,6 +190,7 @@
 		F7B320702944AFF800D58B80 /* MyFavoriteInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyFavoriteInteractor.swift; sourceTree = "<group>"; };
 		F7B320712944AFF800D58B80 /* DetailGenreInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailGenreInteractor.swift; sourceTree = "<group>"; };
 		F7B320C22944B1E200D58B80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F7B320D229456DA700D58B80 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Core; path = Modules/Core; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,9 +198,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7B320B82944B0DE00D58B80 /* RealmSwift in Frameworks */,
+				F78DEBB129457FCC009F8575 /* Realm in Frameworks */,
+				F7B320D529456FE700D58B80 /* SDWebImageSwiftUI in Frameworks */,
+				F78DEBB329457FCC009F8575 /* RealmSwift in Frameworks */,
 				F7B320BB2944B0F500D58B80 /* SkeletonUI in Frameworks */,
-				F7B320B62944B0DE00D58B80 /* Realm in Frameworks */,
 				F7B320C12944B12F00D58B80 /* Alamofire in Frameworks */,
 				F7B320B32944B0CA00D58B80 /* Lottie in Frameworks */,
 				F7B320BE2944B11100D58B80 /* Kingfisher in Frameworks */,
@@ -225,6 +228,7 @@
 		F78692642944A7CB0063A717 = {
 			isa = PBXGroup;
 			children = (
+				F7B320D129456DA700D58B80 /* Packages */,
 				F786926F2944A7CB0063A717 /* Gametopia */,
 				F78692802944A7CD0063A717 /* GametopiaTests */,
 				F786928A2944A7CD0063A717 /* GametopiaUITests */,
@@ -684,6 +688,14 @@
 			path = "Use Case";
 			sourceTree = "<group>";
 		};
+		F7B320D129456DA700D58B80 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				F7B320D229456DA700D58B80 /* Core */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -702,11 +714,12 @@
 			name = Gametopia;
 			packageProductDependencies = (
 				F7B320B22944B0CA00D58B80 /* Lottie */,
-				F7B320B52944B0DE00D58B80 /* Realm */,
-				F7B320B72944B0DE00D58B80 /* RealmSwift */,
 				F7B320BA2944B0F500D58B80 /* SkeletonUI */,
 				F7B320BD2944B11100D58B80 /* Kingfisher */,
 				F7B320C02944B12F00D58B80 /* Alamofire */,
+				F7B320D429456FE700D58B80 /* SDWebImageSwiftUI */,
+				F78DEBB029457FCC009F8575 /* Realm */,
+				F78DEBB229457FCC009F8575 /* RealmSwift */,
 			);
 			productName = Gametopia;
 			productReference = F786926D2944A7CB0063A717 /* Gametopia.app */;
@@ -782,10 +795,11 @@
 			mainGroup = F78692642944A7CB0063A717;
 			packageReferences = (
 				F7B320B12944B0CA00D58B80 /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				F7B320B42944B0DE00D58B80 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				F7B320B92944B0F500D58B80 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				F7B320BC2944B11100D58B80 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				F7B320BF2944B12F00D58B80 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				F7B320D329456FE700D58B80 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				F78DEBAF29457FCC009F8575 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = F786926E2944A7CB0063A717 /* Products */;
 			projectDirPath = "";
@@ -1228,17 +1242,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F7B320B12944B0CA00D58B80 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		F78DEBAF29457FCC009F8575 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			repositoryURL = "https://github.com/realm/realm-cocoa";
 			requirement = {
 				branch = master;
 				kind = branch;
 			};
 		};
-		F7B320B42944B0DE00D58B80 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+		F7B320B12944B0CA00D58B80 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-cocoa";
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -1268,23 +1282,31 @@
 				kind = branch;
 			};
 		};
+		F7B320D329456FE700D58B80 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F78DEBB029457FCC009F8575 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F78DEBAF29457FCC009F8575 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		F78DEBB229457FCC009F8575 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F78DEBAF29457FCC009F8575 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
 		F7B320B22944B0CA00D58B80 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F7B320B12944B0CA00D58B80 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
-		};
-		F7B320B52944B0DE00D58B80 /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F7B320B42944B0DE00D58B80 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = Realm;
-		};
-		F7B320B72944B0DE00D58B80 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F7B320B42944B0DE00D58B80 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = RealmSwift;
 		};
 		F7B320BA2944B0F500D58B80 /* SkeletonUI */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1300,6 +1322,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F7B320BF2944B12F00D58B80 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		F7B320D429456FE700D58B80 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F7B320D329456FE700D58B80 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

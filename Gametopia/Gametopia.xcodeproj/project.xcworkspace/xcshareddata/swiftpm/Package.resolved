@@ -1,68 +1,88 @@
 {
-  "pins" : [
-    {
-      "identity" : "alamofire",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Alamofire/Alamofire",
-      "state" : {
-        "branch" : "master",
-        "revision" : "78424be314842833c04bc3bef5b72e85fff99204"
+  "object": {
+    "pins": [
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire",
+        "state": {
+          "branch": "master",
+          "revision": "78424be314842833c04bc3bef5b72e85fff99204",
+          "version": null
+        }
+      },
+      {
+        "package": "Kingfisher",
+        "repositoryURL": "https://github.com/onevcat/Kingfisher",
+        "state": {
+          "branch": "master",
+          "revision": "3e091ee962391a2ddcae5b18e17bc625f9d88d6e",
+          "version": null
+        }
+      },
+      {
+        "package": "Lottie",
+        "repositoryURL": "https://github.com/airbnb/lottie-ios",
+        "state": {
+          "branch": "master",
+          "revision": "9ce485d7b519a275628adb3667b483d5660524ff",
+          "version": null
+        }
+      },
+      {
+        "package": "Realm",
+        "repositoryURL": "https://github.com/realm/realm-cocoa",
+        "state": {
+          "branch": "master",
+          "revision": "b002cf50fbc21b6f52f3b4e74b15edc4007d5cbc",
+          "version": null
+        }
+      },
+      {
+        "package": "RealmDatabase",
+        "repositoryURL": "https://github.com/realm/realm-core.git",
+        "state": {
+          "branch": null,
+          "revision": "b77443ca7fa25407869ca537bf3ae912b1427bff",
+          "version": "12.13.0"
+        }
+      },
+      {
+        "package": "SDWebImage",
+        "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
+        "state": {
+          "branch": null,
+          "revision": "3312bf5e67b52fbce7c3caf431b0cda721a9f7bb",
+          "version": "5.14.2"
+        }
+      },
+      {
+        "package": "SDWebImageSwiftUI",
+        "repositoryURL": "https://github.com/SDWebImage/SDWebImageSwiftUI",
+        "state": {
+          "branch": null,
+          "revision": "ed288667c909c89127ab1b690113a3e397af3098",
+          "version": "2.2.1"
+        }
+      },
+      {
+        "package": "SkeletonUI",
+        "repositoryURL": "https://github.com/CSolanaM/SkeletonUI",
+        "state": {
+          "branch": "develop",
+          "revision": "98225dbb0459477dfeac063e1c7d0750102325d1",
+          "version": null
+        }
+      },
+      {
+        "package": "swift-snapshot-testing",
+        "repositoryURL": "https://github.com/pointfreeco/swift-snapshot-testing",
+        "state": {
+          "branch": null,
+          "revision": "f29e2014f6230cf7d5138fc899da51c7f513d467",
+          "version": "1.10.0"
+        }
       }
-    },
-    {
-      "identity" : "kingfisher",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/onevcat/Kingfisher",
-      "state" : {
-        "branch" : "master",
-        "revision" : "3e091ee962391a2ddcae5b18e17bc625f9d88d6e"
-      }
-    },
-    {
-      "identity" : "lottie-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/airbnb/lottie-ios",
-      "state" : {
-        "branch" : "master",
-        "revision" : "9ce485d7b519a275628adb3667b483d5660524ff"
-      }
-    },
-    {
-      "identity" : "realm-cocoa",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/realm/realm-cocoa",
-      "state" : {
-        "branch" : "master",
-        "revision" : "b002cf50fbc21b6f52f3b4e74b15edc4007d5cbc"
-      }
-    },
-    {
-      "identity" : "realm-core",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/realm/realm-core.git",
-      "state" : {
-        "revision" : "b77443ca7fa25407869ca537bf3ae912b1427bff",
-        "version" : "12.13.0"
-      }
-    },
-    {
-      "identity" : "skeletonui",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/CSolanaM/SkeletonUI",
-      "state" : {
-        "branch" : "develop",
-        "revision" : "98225dbb0459477dfeac063e1c7d0750102325d1"
-      }
-    },
-    {
-      "identity" : "swift-snapshot-testing",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swift-snapshot-testing",
-      "state" : {
-        "revision" : "f29e2014f6230cf7d5138fc899da51c7f513d467",
-        "version" : "1.10.0"
-      }
-    }
-  ],
-  "version" : 2
+    ]
+  },
+  "version": 1
 }
