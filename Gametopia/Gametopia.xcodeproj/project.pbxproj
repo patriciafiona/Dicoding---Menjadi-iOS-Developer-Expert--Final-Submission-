@@ -89,6 +89,8 @@
 		F7B320CA2944B2FB00D58B80 /* no_result.json in Resources */ = {isa = PBXBuildFile; fileRef = F7B318922944AEB000D58B80 /* no_result.json */; };
 		F7B320CB2944B30C00D58B80 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F78692772944A7CD0063A717 /* Preview Assets.xcassets */; };
 		F7B320CC2944B31700D58B80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7B320C22944B1E200D58B80 /* Assets.xcassets */; };
+		F7B320CF294558E400D58B80 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7B3188C2944AEB000D58B80 /* Info.plist */; };
+		F7B320D0294558E500D58B80 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7B3188C2944AEB000D58B80 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -245,7 +247,6 @@
 		F786926F2944A7CB0063A717 /* Gametopia */ = {
 			isa = PBXGroup;
 			children = (
-				F7B3188C2944AEB000D58B80 /* Info.plist */,
 				F7B318842944AE3500D58B80 /* App */,
 				F7B3203D2944AFF800D58B80 /* Core */,
 				F7B3200D2944AFF800D58B80 /* Module */,
@@ -291,6 +292,7 @@
 		F7B318872944AE6800D58B80 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F7B3188C2944AEB000D58B80 /* Info.plist */,
 				F7B320C22944B1E200D58B80 /* Assets.xcassets */,
 				F7B318882944AEB000D58B80 /* Fonts */,
 				F7B3188D2944AEB000D58B80 /* Lotties */,
@@ -803,6 +805,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7B320CF294558E400D58B80 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -810,6 +813,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7B320D0294558E500D58B80 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1061,7 +1065,7 @@
 				DEVELOPMENT_TEAM = RDA574N926;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Gametopia/Info.plist;
+				INFOPLIST_FILE = "Gametopia/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1091,7 +1095,7 @@
 				DEVELOPMENT_TEAM = RDA574N926;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Gametopia/Info.plist;
+				INFOPLIST_FILE = "Gametopia/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
