@@ -7,13 +7,15 @@
 
 import SwiftUI
 import Kingfisher
+import Core
+import Favorite
 
 struct FavoriteTab: View {
-  @ObservedObject var presenter: FavoritesPresenter
+  @ObservedObject var presenter: GetListPresenter<Any, FavoriteDomainModel, Interactor<Any, [FavoriteDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, GetFavoritesRemoteDataSource, FavoriteTransformer>>>
   
   var body: some View {
     ZStack {
-      if presenter.loadingState {
+      if presenter.isLoading {
         ZStack{
           LottieView(
             name: "loading",
@@ -37,10 +39,14 @@ struct FavoriteTab: View {
             )
             .foregroundColor(.yellow)
           
-          if(!presenter.games.isEmpty){
+          if(!presenter.list.isEmpty){
             LazyVStack{
-              ForEach(presenter.games, id: \.self.id){ game in
-                self.presenter.linkBuilder(for: game.id!) {
+              ForEach(presenter.list, id: \.self.id){ game in
+//                self.presenter.linkBuilder(for: game.id!) {
+//                  GameFavoriteItem(presenter: presenter, game: game)
+//                }.buttonStyle(PlainButtonStyle())
+                
+                ZStack {
                   GameFavoriteItem(presenter: presenter, game: game)
                 }.buttonStyle(PlainButtonStyle())
               }
@@ -96,7 +102,7 @@ struct FavoriteTab: View {
       }
     }
     .onAppear{
-      presenter.getFavoritesGames()
+      presenter.getList(request: nil)
       self.presenter.objectWillChange.send()
       
       //tab bar appearance
@@ -110,8 +116,8 @@ struct FavoriteTab: View {
 }
 
 struct GameFavoriteItem: View{
-    @ObservedObject var presenter: FavoritesPresenter
-    @State var game: DetailGameModel?
+    @ObservedObject var presenter: GetListPresenter<Any, FavoriteDomainModel, Interactor<Any, [FavoriteDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, GetFavoritesRemoteDataSource, FavoriteTransformer>>>
+    @State var game: FavoriteDomainModel?
     
     var body: some View {
         HStack{

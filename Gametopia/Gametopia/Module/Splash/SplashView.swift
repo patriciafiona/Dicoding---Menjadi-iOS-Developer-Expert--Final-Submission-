@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import Core
+import Favorite
 
 struct SplashView: View {
   @State var pushNewView: Bool = false
   
   @EnvironmentObject var homePresenter: HomePresenter
-  @EnvironmentObject var favoritePresenter: FavoritesPresenter
+  @EnvironmentObject var favoritePresenter: GetListPresenter<Any, FavoriteDomainModel, Interactor<Any, [FavoriteDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, GetFavoritesRemoteDataSource, FavoriteTransformer>>>
+//  @EnvironmentObject var favoritePresenter: FavoritesPresenter
   @EnvironmentObject var searchPresenter: SearchPresenter
   
   var body: some View {

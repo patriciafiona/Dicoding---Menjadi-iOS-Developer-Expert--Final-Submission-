@@ -13,6 +13,8 @@
 		F786928E2944A7CD0063A717 /* GametopiaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F786928D2944A7CD0063A717 /* GametopiaUITestsLaunchTests.swift */; };
 		F78DEBB129457FCC009F8575 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = F78DEBB029457FCC009F8575 /* Realm */; };
 		F78DEBB329457FCC009F8575 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F78DEBB229457FCC009F8575 /* RealmSwift */; };
+		F78DEBE729458E78009F8575 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = F78DEBE629458E78009F8575 /* Core */; };
+		F78DEBEF29459179009F8575 /* Favorite in Frameworks */ = {isa = PBXBuildFile; productRef = F78DEBEE29459179009F8575 /* Favorite */; };
 		F7B320722944AFF800D58B80 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B3200F2944AFF800D58B80 /* SplashView.swift */; };
 		F7B320732944AFF800D58B80 /* DiscoveryByRatingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B320122944AFF800D58B80 /* DiscoveryByRatingPresenter.swift */; };
 		F7B320742944AFF800D58B80 /* DiscoveryByRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B320142944AFF800D58B80 /* DiscoveryByRatingView.swift */; };
@@ -118,6 +120,7 @@
 		F78692872944A7CD0063A717 /* GametopiaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GametopiaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F786928B2944A7CD0063A717 /* GametopiaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GametopiaUITests.swift; sourceTree = "<group>"; };
 		F786928D2944A7CD0063A717 /* GametopiaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GametopiaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F78DEBE4294586B4009F8575 /* Favorite */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Favorite; path = Modules/Favorite; sourceTree = "<group>"; };
 		F7B318892944AEB000D58B80 /* VerminVibes.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = VerminVibes.ttf; sourceTree = "<group>"; };
 		F7B3188A2944AEB000D58B80 /* EvilEmpire.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilEmpire.ttf; sourceTree = "<group>"; };
 		F7B3188C2944AEB000D58B80 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -203,6 +206,8 @@
 				F78DEBB329457FCC009F8575 /* RealmSwift in Frameworks */,
 				F7B320BB2944B0F500D58B80 /* SkeletonUI in Frameworks */,
 				F7B320C12944B12F00D58B80 /* Alamofire in Frameworks */,
+				F78DEBEF29459179009F8575 /* Favorite in Frameworks */,
+				F78DEBE729458E78009F8575 /* Core in Frameworks */,
 				F7B320B32944B0CA00D58B80 /* Lottie in Frameworks */,
 				F7B320BE2944B11100D58B80 /* Kingfisher in Frameworks */,
 			);
@@ -233,6 +238,7 @@
 				F78692802944A7CD0063A717 /* GametopiaTests */,
 				F786928A2944A7CD0063A717 /* GametopiaUITests */,
 				F786926E2944A7CB0063A717 /* Products */,
+				F78DEBE529458E78009F8575 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -281,6 +287,13 @@
 				F786928D2944A7CD0063A717 /* GametopiaUITestsLaunchTests.swift */,
 			);
 			path = GametopiaUITests;
+			sourceTree = "<group>";
+		};
+		F78DEBE529458E78009F8575 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		F7B318842944AE3500D58B80 /* App */ = {
@@ -692,6 +705,7 @@
 			isa = PBXGroup;
 			children = (
 				F7B320D229456DA700D58B80 /* Core */,
+				F78DEBE4294586B4009F8575 /* Favorite */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -720,6 +734,8 @@
 				F7B320D429456FE700D58B80 /* SDWebImageSwiftUI */,
 				F78DEBB029457FCC009F8575 /* Realm */,
 				F78DEBB229457FCC009F8575 /* RealmSwift */,
+				F78DEBE629458E78009F8575 /* Core */,
+				F78DEBEE29459179009F8575 /* Favorite */,
 			);
 			productName = Gametopia;
 			productReference = F786926D2944A7CB0063A717 /* Gametopia.app */;
@@ -1302,6 +1318,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F78DEBAF29457FCC009F8575 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
+		};
+		F78DEBE629458E78009F8575 /* Core */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Core;
+		};
+		F78DEBEE29459179009F8575 /* Favorite */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Favorite;
 		};
 		F7B320B22944B0CA00D58B80 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

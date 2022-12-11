@@ -7,8 +7,13 @@
 
 import Foundation
 import RealmSwift
+import Core
+import Favorite
+import UIKit
 
 final class Injection: NSObject {
+  
+  var realm: Realm! = try! Realm()
   
   private func provideRepository() -> GametopiaRepositoryProtocol {
     let realm = try? Realm()
@@ -42,6 +47,17 @@ final class Injection: NSObject {
   func provideMyFavorites() -> MyFavoriteUseCase {
     let repository = provideRepository()
     return MyFavoritesInteractor(repository: repository)
+  }
+  
+  func provideFavorite<U: UseCase>() -> U where U.Request == Any, U.Response == [FavoriteDomainModel] {
+      let locale = GetFavoritesLocaleDataSource(realm: realm)
+      let remote = GetFavoritesRemoteDataSource(endpoint: Endpoints.Gets.games.url)
+      let mapper = FavoriteTransformer()
+      let repository = GetFavoritesRepository(
+          localeDataSource: locale,
+          remoteDataSource: remote,
+          mapper: mapper)
+      return Interactor(repository: repository) as! U
   }
   
   func provideSearch() -> SearchUseCase {
