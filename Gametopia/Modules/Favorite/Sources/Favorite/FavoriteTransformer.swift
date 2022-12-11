@@ -6,39 +6,123 @@
 //
 
 import Core
+import Game
 
-public struct FavoriteTransformer: Mapper {  
+public struct FavoriteTransformer: Mapper {
   public typealias Response = [GameResult]
-  public typealias Entity = [FavoriteModuleEntity]
-  public typealias Domain = [FavoriteDomainModel]
+  public typealias Entity = [GameModuleEntity]
+  public typealias Domain = [DetailGameDomainModel]
   
   public init() {}
   
-  public func transformResponseToDomain(response: [GameResult]) -> [FavoriteDomainModel] {
-    return response.map { result in
-      return FavoriteDomainModel(
-        id: result.id ?? 0,
-        name: result.name ?? "Unknown Name",
-        released: result.released ?? "Unknown Release",
-        backgroundImage: result.backgroundImage ?? "",
-        rating: result.rating ?? 0.0,
-        ratingTop: result.ratingTop ?? 0.0,
-        suggestionsCount: result.suggestionsCount ?? 0,
-        updated: result.updated ?? "Unknown date",
-        reviewsCount: result.reviewsCount ?? 0,
-        communityRating: result.communityRating ?? 0,
-        platforms: (result.platforms ?? nil) as? [PlatformModel],
-        genres: (result.genres ?? nil) as? [GenreInGameModel],
-        parentPlatforms: (result.parentPlatforms ?? nil) as? [ParentPlatformPlatformModel]
+  public func transformResponseToDomain(response: [GameResult]) -> [DetailGameDomainModel] {
+    return []
+  }
+  
+  public func transformResponseToEntity(response: [GameResult]) -> [GameModuleEntity] {
+    return []
+  }
+  
+  public func transformEntityToDomain(entity: [GameModuleEntity]) -> [DetailGameDomainModel] {
+    return entity.map { result in
+      return DetailGameDomainModel(
+        id: Int(result.id),
+        isFavorite: result.isFavorite,
+        slug: result.slug,
+        name: result.name,
+        nameOriginal: result.nameOriginal,
+        description: result.desc,
+        released: result.released,
+        updated: result.updated,
+        backgroundImage: result.backgroundImage,
+        backgroundImageAdditional: result.backgroundImageAdditional,
+        website: result.website,
+        rating: result.rating,
+        added: result.added,
+        playtime: result.playtime,
+        achievementsCount: result.ratingsCount,
+        ratingsCount: result.reviewsCount,
+        suggestionsCount: result.suggestionsCount,
+        reviewsCount: result.achievementsCount,
+        parentPlatforms: result.parentPlatforms.map { platform in
+          return PlatformModel(
+            id: platform.id,
+            name: platform.name,
+            slug: platform.slug
+          )
+        },
+        platforms: result.platforms.map { data in
+          return DetailPlatformDomainModel(
+            id: data.id,
+            platform: PlatformDetailsDomainModel(
+              id: data.platform!.id,
+              name: data.platform?.name,
+              slug: data.platform?.slug,
+              image: data.platform?.image,
+              yearEnd: data.platform?.yearEnd,
+              yearStart: data.platform?.yearStart,
+              gamesCount: data.platform?.gamesCount,
+              imageBackground: data.platform?.imageBackground
+            ),
+            releasedAt: data.releasedAt,
+            requirements: PlatformRequirementDomainModel(
+              id: data.requirements!.id,
+              minimum: data.requirements?.minimum
+            )
+          )
+        },
+        stores: result.stores.map { store in
+           return StoreDetailsDomainModel(
+            id: store.id,
+            url: store.url,
+            store: StoreDomainModel(
+              id: store.store!.id,
+              name: store.store?.name,
+              slug: store.store?.slug,
+              gamesCount: store.store?.gamesCount,
+              domain: store.store?.domain,
+              imageBackground: store.store?.imageBackground
+            )
+           )
+        },
+        developers: result.developers.map { developer in
+          return DeveloperInDetailGameDomainModel(
+            id: developer.id,
+            name: developer.name,
+            slug: developer.slug,
+            gamesCount: developer.gamesCount,
+            imageBackground: developer.imageBackground
+          )
+        },
+        genres: result.genres.map { genre in
+          return GenreInDetailsDomainModel(
+            id: genre.id,
+            name: genre.name,
+            slug: genre.slug,
+            gamesCount: genre.gamesCount,
+            imageBackground: genre.imageBackground
+          )
+        },
+        tags: result.tags.map { tag in
+          return TagDomainModel(
+            id: tag.id,
+            name: tag.name,
+            slug: tag.slug,
+            gamesCount: tag.gamesCount,
+            imageBackground: tag.imageBackground
+          )
+        },
+        publishers: result.publishers.map { publisher in
+          return PublisherDomainModel(
+            id: publisher.id,
+            name: publisher.name,
+            slug: publisher.slug,
+            gamesCount: publisher.gamesCount,
+            imageBackground: publisher.imageBackground
+          )
+        },
+        descriptionRaw: result.descriptionRaw
       )
     }
-  }
-  
-  public func transformResponseToEntity(response: [GameResult]) -> [FavoriteModuleEntity] {
-    return []
-  }
-  
-  public func transformEntityToDomain(entity: [FavoriteModuleEntity]) -> [FavoriteDomainModel] {
-    return []
   }
 }

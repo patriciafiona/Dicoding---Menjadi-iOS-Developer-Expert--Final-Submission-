@@ -7,12 +7,12 @@
 
 import Foundation
 
-public struct FavoritesResponse: Decodable {
-  let games: FavoriteResponse
+public struct GamesResponse: Decodable {
+  let games: GameResponse
 }
 
 // MARK: - Welcome
-public struct FavoriteResponse: Decodable {
+public struct GameResponse: Decodable {
     let count: Int?
     let next, previous: String?
     let results: [GameResult]?
@@ -59,4 +59,3 @@ public struct Genre: Decodable {
     let imageBackground: String?
     let language: String?
 }
-

@@ -1,13 +1,13 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Patricia Fiona on 11/12/22.
 //
 
 import Foundation
 
-public struct FavoriteDomainModel: Equatable {
+public struct GameDomainModel: Equatable {
   public let id: Int?
   public let name, released: String?
   public let backgroundImage: String?
@@ -30,7 +30,7 @@ public struct PlatformsModel: Equatable {
 // MARK: - Platform
 public struct PlatformModel: Equatable, Identifiable {
   public let id: UUID
-    let name, slug: String?
+  public let name, slug: String?
 }
 
 // MARK: - ParentPlatformPlatform

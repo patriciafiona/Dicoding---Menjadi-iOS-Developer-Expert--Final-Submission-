@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct DetailGameModel: Equatable, Identifiable {
-  let id: Int?
+public struct DetailGameModel: Equatable, Identifiable {
+  public let id: Int?
   let isFavorite: Bool?
   let slug, name, nameOriginal, description: String?
   let released: String?
@@ -32,65 +32,65 @@ struct DetailGameModel: Equatable, Identifiable {
   let descriptionRaw: String?
 }
 
-struct DetailPlatformModel: Equatable, Identifiable {
-    let id: UUID
-    let platform: PlatformDetailsModel?
-    let releasedAt: String?
-    let requirements: PlatformRequirementModel?
+public struct DetailPlatformModel: Equatable, Identifiable {
+  public let id: UUID
+  let platform: PlatformDetailsModel?
+  let releasedAt: String?
+  let requirements: PlatformRequirementModel?
 }
 
-struct PlatformDetailsModel: Equatable, Identifiable{
-    var id: UUID
-    let name, slug: String?
-    let image: String?
-    let yearEnd, yearStart: Int?
-    let gamesCount: Int?
-    let imageBackground: String?
+public struct PlatformDetailsModel: Equatable, Identifiable{
+  public var id: UUID
+  let name, slug: String?
+  let image: String?
+  let yearEnd, yearStart: Int?
+  let gamesCount: Int?
+  let imageBackground: String?
 }
 
-struct PlatformRequirementModel: Equatable, Identifiable{
-  let id: UUID
+public struct PlatformRequirementModel: Equatable, Identifiable{
+  public let id: UUID
   let minimum: String?
 }
 
-struct StoreDetailsModel: Equatable, Identifiable{
-    let id: UUID
-    let url: String?
-    let store: StoreModel?
+public struct StoreDetailsModel: Equatable, Identifiable{
+  public let id: UUID
+  let url: String?
+  let store: StoreModel?
 }
 
-struct StoreModel: Equatable, Identifiable{
-    let id: UUID
-    let name, slug: String?
-    let gamesCount: Int?
-    let domain: String?
-    let imageBackground: String?
+public struct StoreModel: Equatable, Identifiable{
+  public let id: UUID
+  let name, slug: String?
+  let gamesCount: Int?
+  let domain: String?
+  let imageBackground: String?
 }
 
-struct DeveloperInDetailGameModel: Equatable, Identifiable{
-    let id: UUID
-    let name, slug: String?
-    let gamesCount: Int?
-    let imageBackground: String?
+public struct DeveloperInDetailGameModel: Equatable, Identifiable{
+  public let id: UUID
+  let name, slug: String?
+  let gamesCount: Int?
+  let imageBackground: String?
 }
 
-struct PublisherModel: Equatable, Identifiable{
-    let id: UUID
-    let name, slug: String?
-    let gamesCount: Int?
-    let imageBackground: String?
+public struct PublisherModel: Equatable, Identifiable{
+  public let id: UUID
+  let name, slug: String?
+  let gamesCount: Int?
+  let imageBackground: String?
 }
 
-struct GenreInDetailsModel: Equatable, Identifiable{
-    let id: UUID
-    let name, slug: String?
-    let gamesCount: Int?
-    let imageBackground: String?
+public struct GenreInDetailsModel: Equatable, Identifiable{
+  public let id: UUID
+  let name, slug: String?
+  let gamesCount: Int?
+  let imageBackground: String?
 }
 
-struct TagModel: Equatable, Identifiable{
-    let id: UUID
-    let name, slug: String?
-    let gamesCount: Int?
-    let imageBackground: String?
+public struct TagModel: Equatable, Identifiable{
+  public let id: UUID
+  let name, slug: String?
+  let gamesCount: Int?
+  let imageBackground: String?
 }

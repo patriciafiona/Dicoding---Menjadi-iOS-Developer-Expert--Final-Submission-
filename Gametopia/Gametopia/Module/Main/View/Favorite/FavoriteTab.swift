@@ -11,7 +11,7 @@ import Core
 import Favorite
 
 struct FavoriteTab: View {
-  @ObservedObject var presenter: GetListPresenter<Any, FavoriteDomainModel, Interactor<Any, [FavoriteDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, GetFavoritesRemoteDataSource, FavoriteTransformer>>>
+  @ObservedObject var presenter: GetListPresenter<Any, DetailGameDomainModel, Interactor<Any, [DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
   
   var body: some View {
     ZStack {
@@ -116,8 +116,8 @@ struct FavoriteTab: View {
 }
 
 struct GameFavoriteItem: View{
-    @ObservedObject var presenter: GetListPresenter<Any, FavoriteDomainModel, Interactor<Any, [FavoriteDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, GetFavoritesRemoteDataSource, FavoriteTransformer>>>
-    @State var game: FavoriteDomainModel?
+  @ObservedObject var presenter: GetListPresenter<Any, DetailGameDomainModel, Interactor<Any, [DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+    @State var game: DetailGameDomainModel?
     
     var body: some View {
         HStack{

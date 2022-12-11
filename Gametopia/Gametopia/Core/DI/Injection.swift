@@ -8,6 +8,7 @@
 import Foundation
 import RealmSwift
 import Core
+import Game
 import Favorite
 import UIKit
 
@@ -49,13 +50,11 @@ final class Injection: NSObject {
     return MyFavoritesInteractor(repository: repository)
   }
   
-  func provideFavorite<U: UseCase>() -> U where U.Request == Any, U.Response == [FavoriteDomainModel] {
+  func provideFavorite<U: UseCase>() -> U where U.Request == Any, U.Response == [DetailGameDomainModel] {
       let locale = GetFavoritesLocaleDataSource(realm: realm)
-      let remote = GetFavoritesRemoteDataSource(endpoint: Endpoints.Gets.games.url)
       let mapper = FavoriteTransformer()
       let repository = GetFavoritesRepository(
           localeDataSource: locale,
-          remoteDataSource: remote,
           mapper: mapper)
       return Interactor(repository: repository) as! U
   }

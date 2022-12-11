@@ -1,6 +1,6 @@
 //
 //  File.swift
-//
+//  
 //
 //  Created by Patricia Fiona on 11/12/22.
 //
@@ -9,10 +9,9 @@ import Core
 import Combine
 import RealmSwift
 import Foundation
-import Game
  
  
-public struct GetFavoritesLocaleDataSource: LocaleDataSource {
+public struct GetGamesLocaleDataSource: LocaleDataSource {
     
     public typealias Request = Any
     public typealias Response = GameModuleEntity
@@ -27,32 +26,27 @@ public struct GetFavoritesLocaleDataSource: LocaleDataSource {
         return Future<[GameModuleEntity], Error> { completion in
             let games: Results<GameModuleEntity> = {
               _realm.objects(GameModuleEntity.self)
-                .filter("isFavorite == true")
+                .sorted(byKeyPath: "name", ascending: true)
             }()
             completion(.success(games.toArray(ofType: GameModuleEntity.self)))
           
         }.eraseToAnyPublisher()
     }
-  
-    public func update(id: Int, isFavorite: Bool) -> AnyPublisher<Bool, Error> {
-      return Future<Bool, Error> { completion in
-        do {
-          let currentData = _realm.objects(GameModuleEntity.self).where {
-            $0.id == id
-        }.first!
-          //Update the nil description
-          try _realm.write {
-            currentData.setValue(isFavorite, forKey: "isFavorite")
-          }
-          completion(.success(true))
-        } catch {
-          completion(.failure(DatabaseError.requestFailed))
-        }
-      }.eraseToAnyPublisher()
-    }
  
     public func add(entities: [GameModuleEntity]) -> AnyPublisher<Bool, Error> {
-      fatalError()
+        return Future<Bool, Error> { completion in
+            do {
+                try _realm.write {
+                    for game in entities {
+                        _realm.add(game, update: .all)
+                    }
+                    completion(.success(true))
+                }
+            } catch {
+                completion(.failure(DatabaseError.requestFailed))
+            }
+            
+        }.eraseToAnyPublisher()
     }
     
     public func get(id: String) -> AnyPublisher<GameModuleEntity, Error> {
@@ -62,5 +56,4 @@ public struct GetFavoritesLocaleDataSource: LocaleDataSource {
     public func update(id: Int, entity: GameModuleEntity) -> AnyPublisher<Bool, Error> {
         fatalError()
     }
-  
 }

@@ -7,11 +7,12 @@
 
 import SwiftUI
 import Core
+import Game
 import Favorite
 
 struct HomeView: View {
   @ObservedObject var homePresenter: HomePresenter
-  @ObservedObject var favoritePresenter: GetListPresenter<Any, FavoriteDomainModel, Interactor<Any, [FavoriteDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, GetFavoritesRemoteDataSource, FavoriteTransformer>>>
+  @ObservedObject var favoritePresenter: GetListPresenter<Any, DetailGameDomainModel, Interactor<Any, [DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
   @ObservedObject var searchPresenter: SearchPresenter
   
   @State var tabSelection: Tabs = .tabHome

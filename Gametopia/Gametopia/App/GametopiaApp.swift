@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Core
+import Game
 import Favorite
 
 @main
@@ -20,12 +21,12 @@ struct GametopiaApp: App {
       
       let favoriteUseCase: Interactor<
           Any,
-          [FavoriteDomainModel],
+          [DetailGameDomainModel],
           GetFavoritesRepository<
               GetFavoritesLocaleDataSource,
-              GetFavoritesRemoteDataSource,
-              FavoriteTransformer>
-      > = Injection.init().provideFavorite()
+              FavoriteTransformer
+          >
+        > = Injection.init().provideFavorite()
       let favoritePresenter = GetListPresenter(useCase: favoriteUseCase)
       
       let seachUseCase = Injection.init().provideSearch()

@@ -10,7 +10,7 @@ import Combine
 import Alamofire
 import Foundation
  
-public struct GetFavoritesRemoteDataSource : DataSource {
+public struct GetGamesRemoteDataSource : DataSource {
     public typealias Request = Any
     
     public typealias Response = [GameResult]
@@ -26,7 +26,7 @@ public struct GetFavoritesRemoteDataSource : DataSource {
           if let url = URL(string: _endpoint) {
             AF.request(url)
               .validate()
-              .responseDecodable(of: FavoritesResponse.self) { response in
+              .responseDecodable(of: GamesResponse.self) { response in
                 switch response.result {
                 case .success(let value):
                   completion(.success(value.games.results ?? []))
@@ -38,3 +38,4 @@ public struct GetFavoritesRemoteDataSource : DataSource {
         }.eraseToAnyPublisher()
     }
 }
+

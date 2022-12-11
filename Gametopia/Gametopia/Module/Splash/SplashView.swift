@@ -13,7 +13,7 @@ struct SplashView: View {
   @State var pushNewView: Bool = false
   
   @EnvironmentObject var homePresenter: HomePresenter
-  @EnvironmentObject var favoritePresenter: GetListPresenter<Any, FavoriteDomainModel, Interactor<Any, [FavoriteDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, GetFavoritesRemoteDataSource, FavoriteTransformer>>>
+  @EnvironmentObject var favoritePresenter: GetListPresenter<Any, DetailGameDomainModel, Interactor<Any, [DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
 //  @EnvironmentObject var favoritePresenter: FavoritesPresenter
   @EnvironmentObject var searchPresenter: SearchPresenter
   
