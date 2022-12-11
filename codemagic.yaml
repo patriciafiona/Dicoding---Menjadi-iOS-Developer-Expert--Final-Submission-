@@ -9,11 +9,6 @@ workflows:
           XCODE_WORKSPACE : "Gametopia/Gametopia.xcworkspace" # Isikan nama workspace Anda.
           XCODE_SCHEME: "Gametopia" # Isikan nama scheme project Anda.
     scripts:
-      - name: Set Info.plist values
-        script: | 
-          PLIST=$CM_BUILD_DIR/$XCODE_SCHEME/Info.plist
-          PLIST_BUDDY=/usr/libexec/PlistBuddy
-          $PLIST_BUDDY -c "Add :ITSAppUsesNonExemptEncryption bool false" $PLIST
       - name: Run tests
         script: |
           xcodebuild \

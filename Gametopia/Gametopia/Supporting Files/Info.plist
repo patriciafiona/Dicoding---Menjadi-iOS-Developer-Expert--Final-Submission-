@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>API_KEY</key>
+	<string>7ecad5de28b8421c8e8852f6b59e5020</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>EvilEmpire.ttf</string>
+		<string>VerminVibes.ttf</string>
+	</array>
+</dict>
+</plist>

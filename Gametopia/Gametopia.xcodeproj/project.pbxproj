@@ -227,7 +227,6 @@
 		F78692642944A7CB0063A717 = {
 			isa = PBXGroup;
 			children = (
-				F7B3188C2944AEB000D58B80 /* Info.plist */,
 				F786926F2944A7CB0063A717 /* Gametopia */,
 				F78692802944A7CD0063A717 /* GametopiaTests */,
 				F786928A2944A7CD0063A717 /* GametopiaUITests */,
@@ -293,6 +292,7 @@
 		F7B318872944AE6800D58B80 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F7B3188C2944AEB000D58B80 /* Info.plist */,
 				F7B320C22944B1E200D58B80 /* Assets.xcassets */,
 				F7B318882944AEB000D58B80 /* Fonts */,
 				F7B3188D2944AEB000D58B80 /* Lotties */,
@@ -1065,7 +1065,7 @@
 				DEVELOPMENT_TEAM = RDA574N926;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = "Gametopia/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1095,7 +1095,7 @@
 				DEVELOPMENT_TEAM = RDA574N926;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = "Gametopia/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
