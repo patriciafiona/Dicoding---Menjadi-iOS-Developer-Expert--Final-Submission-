@@ -4,7 +4,7 @@
 **/Gametopia.zip
 
 # Ignore info.plist
-*Info.plist
+# *Info.plist
 
 # Cocoapods
 **/Pods/
