@@ -89,8 +89,6 @@
 		F7B320CA2944B2FB00D58B80 /* no_result.json in Resources */ = {isa = PBXBuildFile; fileRef = F7B318922944AEB000D58B80 /* no_result.json */; };
 		F7B320CB2944B30C00D58B80 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F78692772944A7CD0063A717 /* Preview Assets.xcassets */; };
 		F7B320CC2944B31700D58B80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7B320C22944B1E200D58B80 /* Assets.xcassets */; };
-		F7B320CF294558E400D58B80 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7B3188C2944AEB000D58B80 /* Info.plist */; };
-		F7B320D0294558E500D58B80 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7B3188C2944AEB000D58B80 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -805,7 +803,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7B320CF294558E400D58B80 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,7 +810,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7B320D0294558E500D58B80 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
