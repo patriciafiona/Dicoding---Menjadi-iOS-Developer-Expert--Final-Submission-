@@ -11,7 +11,7 @@ workflows:
     scripts:
       - name: Set Info.plist values
         script: | 
-          PLIST=$CM_BUILD_DIR/$XCODE_SCHEME/Gametopia/Supporting Files/Info.plist
+          PLIST=$CM_BUILD_DIR/$XCODE_SCHEME/Info.plist
           PLIST_BUDDY=/usr/libexec/PlistBuddy
           $PLIST_BUDDY -c "Add :ITSAppUsesNonExemptEncryption bool false" $PLIST
       - name: Run tests
