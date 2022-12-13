@@ -15,10 +15,9 @@ import Favorite
 
 struct GameItem: View {
   @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
-  @ObservedObject var gamePresenter: GetListPresenter<Any, GameDomainModel, Interactor<Any, [GameDomainModel], GetGamesRepository<GetGamesLocaleDataSource, GetGamesRemoteDataSource, GameTransformer>>>
+  @ObservedObject var gamePresenter: GamePresenter
   
-//  @State var game: Game.DetailGameDomainModel
-  @State var game: GameDomainModel
+  @State var game: Game.DetailGameDomainModel
   @State private var _isFavorite: Bool = false
   
   private var scale: CGFloat {
@@ -92,7 +91,7 @@ struct GameItem: View {
           Button(action: {
             _isFavorite = !_isFavorite
             favoritePresenter.updateFavorite(request: nil, id: game.id!, isFavorite: _isFavorite)
-            gamePresenter.getList(request: nil )
+            gamePresenter.getGames()
           }) {
             Image(
               systemName: _isFavorite == true ? "heart.circle.fill" : "heart.circle"
@@ -111,7 +110,7 @@ struct GameItem: View {
       .background(Color(red: 67/255, green: 67/255, blue: 67/255))
       .cornerRadius(10)
       .onAppear{
-//        _isFavorite = game.isFavorite ?? false
+        _isFavorite = game.isFavorite ?? false
       }
     }
 }

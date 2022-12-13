@@ -7,15 +7,12 @@
 
 import Core
 
-public struct GameTransformer: Mapper {
-  public typealias Response = [GameResult]
-  public typealias Entity = [GameModuleEntity]
-  public typealias Domain = [GameDomainModel]
-  
-  public init() {}
-  
-  public func transformResponseToDomain(response: [GameResult]) -> [GameDomainModel] {
-    return response.map { result in
+public struct GameTransformer {
+  static func mapGameResponsesToDomains(
+    input gameResponses: [GameResult]
+  ) -> [GameDomainModel] {
+    
+    return gameResponses.map { result in
       return GameDomainModel(
         id: result.id ?? 0,
         name: result.name ?? "Unknown Name",
@@ -32,14 +29,6 @@ public struct GameTransformer: Mapper {
         parentPlatforms: (result.parentPlatforms ?? nil) as? [ParentPlatformPlatformModel]
       )
     }
-  }
-  
-  public func transformResponseToEntity(response: [GameResult]) -> [GameModuleEntity] {
-    return []
-  }
-  
-  public func transformEntityToDomain(entity: [GameModuleEntity]) -> [GameDomainModel] {
-    return []
   }
 }
 

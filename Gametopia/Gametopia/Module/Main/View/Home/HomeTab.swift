@@ -14,12 +14,12 @@ import Favorite
 
 struct HomeTab: View {
   @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
-  @ObservedObject var gamePresenter: GetListPresenter<Any, GameDomainModel, Interactor<Any, [GameDomainModel], GetGamesRepository<GetGamesLocaleDataSource, GetGamesRemoteDataSource, GameTransformer>>>
+  @ObservedObject var gamePresenter: GamePresenter
   @State var game: Game.DetailGameDomainModel?
   
   var body: some View {
     ZStack {
-      if gamePresenter.isLoading {
+      if gamePresenter.discoveryLoadingState {
         ZStack{
           LottieView(
             name: "loading",
@@ -81,12 +81,12 @@ struct HomeTab: View {
               }
               
               ScrollView(.horizontal, showsIndicators: false){
-                if gamePresenter.isLoading{
+                if gamePresenter.discoveryLoadingState{
                   LazyHStack{
                     ForEach(1..<5) { index in
                       //Empty Skeleton View
                       Rectangle()
-                      .skeleton(with: gamePresenter.isLoading)
+                      .skeleton(with: gamePresenter.discoveryLoadingState)
                       .shape(type: .rectangle)
                       .appearance(type: .solid(color: .yellow, background: .black))
                       .frame(
@@ -98,7 +98,7 @@ struct HomeTab: View {
                 }else{
                   LazyHStack{
                     ForEach(
-                      gamePresenter.list,
+                      gamePresenter.games,
                       id: \.id
                     ) { game in
                       ZStack {
@@ -163,7 +163,7 @@ struct HomeTab: View {
         }
       }
     }.onAppear {
-      self.gamePresenter.getList(request: nil)
+      self.gamePresenter.getGames()
 //      self.presenter.getGenres()
 //      self.presenter.getDevelopers()
       

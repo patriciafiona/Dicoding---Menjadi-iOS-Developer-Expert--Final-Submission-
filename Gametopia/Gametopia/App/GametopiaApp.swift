@@ -18,16 +18,8 @@ struct GametopiaApp: App {
   
   var body: some Scene {
     WindowGroup {
-      let gameUseCase: Interactor<
-          Any,
-          [GameDomainModel],
-          GetGamesRepository<
-              GetGamesLocaleDataSource,
-              GetGamesRemoteDataSource,
-              GameTransformer
-          >
-        > = Injection.init().provideDiscoveryGame()
-      let gamePresenter = GetListPresenter(useCase: gameUseCase)
+      let gameUseCase: GameInteractor = Injection.init().provideGame() as! GameInteractor
+      let gamePresenter = GamePresenter(useCase: gameUseCase)
       
       let favoriteUseCase: Interactor<
           Any,

@@ -53,15 +53,9 @@ final class Injection: NSObject {
   }
   
   //From Module
-  func provideDiscoveryGame<U: UseCase>() -> U where U.Request == Any, U.Response == [GameDomainModel] {
-      let locale = GetGamesLocaleDataSource(realm: realm)
-      let remote = GetGamesRemoteDataSource(endpoint: Endpoints.Gets.games.url)
-      let mapper = GameTransformer()
-      let repository = GetGamesRepository(
-          localeDataSource: locale,
-          remoteDataSource: remote,
-          mapper: mapper)
-      return Interactor(repository: repository) as! U
+  func provideGame() -> GameUseCase {
+    let repository = GetGamesRepository(locale: GetGamesLocaleDataSource(realm: realm), remote: GetGamesRemoteDataSource())
+    return GameInteractor(repository: repository)
   }
   
   func provideFavorite<U: UseCase>() -> U where U.Request == Any, U.Response == [Favorite.DetailGameDomainModel] {

@@ -11,7 +11,7 @@ import RealmSwift
 import Foundation
 
 
-public struct GetGamesLocaleDataSource: LocaleDataSource {
+public struct GetGamesLocaleDataSource {
   public typealias Request = Any
   public typealias Response = GameModuleEntity
   
@@ -21,48 +21,17 @@ public struct GetGamesLocaleDataSource: LocaleDataSource {
     _realm = realm
   }
   
-  //Get All games
-  public func list(request: Any?) -> AnyPublisher<[GameModuleEntity], Error> {
-    return Future<[GameModuleEntity], Error> { completion in
-      let games: Results<GameModuleEntity> = {
-        _realm.objects(GameModuleEntity.self)
-          .sorted(byKeyPath: "name", ascending: true)
-      }()
-      completion(.success(games.toArray(ofType: GameModuleEntity.self)))
-      
-    }.eraseToAnyPublisher()
-  }
-  
-  //Add games
-  public func add(entities: [GameModuleEntity]) -> AnyPublisher<Bool, Error> {
-    return Future<Bool, Error> { completion in
-      do {
-        try _realm.write {
-          for game in entities {
-            _realm.add(game, update: .all)
-          }
-          completion(.success(true))
-        }
-      } catch {
-        completion(.failure(DatabaseError.requestFailed))
-      }
-      
-    }.eraseToAnyPublisher()
-  }
-  
-  //Get sorted game
-  public func list(sortedFromBest: Bool) -> AnyPublisher<[GameModuleEntity], Error> {
+  func getGames() -> AnyPublisher<[GameModuleEntity], Error> {
     return Future<[GameModuleEntity], Error> { completion in
       let detailGames: Results<GameModuleEntity> = {
         _realm.objects(GameModuleEntity.self)
-          .sorted(byKeyPath: "rating", ascending: !sortedFromBest)
+          .sorted(byKeyPath: "name", ascending: true)
       }()
-      completion(.success(detailGames.toArray(ofType: GameModuleEntity.self, limits: 10)))
+      completion(.success(detailGames.toArray(ofType: GameModuleEntity.self)))
     }.eraseToAnyPublisher()
   }
   
-  //Get game based best rating
-  public func listBestRating() -> AnyPublisher<[GameModuleEntity], Error> {
+  func getBestRatingGames() -> AnyPublisher<[GameModuleEntity], Error> {
     return Future<[GameModuleEntity], Error> { completion in
       let detailGames: Results<GameModuleEntity> = {
         _realm.objects(GameModuleEntity.self)
@@ -71,40 +40,89 @@ public struct GetGamesLocaleDataSource: LocaleDataSource {
       completion(.success(detailGames.toArray(ofType: GameModuleEntity.self, limits: 10)))
     }.eraseToAnyPublisher()
   }
-  //Add game
-  public func add(entity: GameModuleEntity) -> AnyPublisher<Bool, Error> {
+  
+  func addGames(
+    from detailGames: [GameModuleEntity]
+  ) -> AnyPublisher<Bool, Error> {
+    return Future<Bool, Error> { completion in
+      do {
+        try _realm.write {
+          for game in detailGames {
+            //Should be manual because need to change from game array to game list
+            let temp = GameModuleEntity()
+            temp.id = game.id
+            temp.name = game.name
+            temp.nameOriginal = game.nameOriginal
+            temp.slug = game.slug
+            temp.desc = game.desc
+            temp.released = game.released
+            temp.updated = game.updated
+            temp.backgroundImage = game.backgroundImage
+            temp.backgroundImageAdditional = game.backgroundImageAdditional
+            temp.website = game.website
+            temp.rating = game.rating
+            temp.added = game.added
+            temp.playtime = game.playtime
+            temp.achievementsCount = game.achievementsCount
+            temp.ratingsCount = game.ratingsCount
+            temp.suggestionsCount = game.suggestionsCount
+            temp.reviewsCount = game.reviewsCount
+            temp.descriptionRaw = game.descriptionRaw
+
+            temp.parentPlatforms.append(objectsIn: game.parentPlatforms)
+            temp.platforms.append(objectsIn: game.platforms)
+            temp.stores.append(objectsIn: game.stores)
+            temp.developers.append(objectsIn: game.developers)
+            temp.genres.append(objectsIn: game.genres)
+            temp.tags.append(objectsIn: game.tags)
+            temp.publishers.append(objectsIn: game.publishers)
+            temp.parentPlatforms.append(objectsIn: game.parentPlatforms)
+
+            _realm.add(temp, update: .all)
+          }
+          completion(.success(true))
+        }
+      } catch {
+        completion(.failure(DatabaseError.requestFailed))
+      }
+    }.eraseToAnyPublisher()
+  }
+  
+  func addGame(
+    from game: GameModuleEntity
+  ) -> AnyPublisher<Bool, Error> {
     return Future<Bool, Error> { completion in
       do {
         try _realm.write {
           //Should be manual because need to change from game array to game list
           let temp = GameModuleEntity()
-          temp.id = entity.id
-          temp.name = entity.name
-          temp.nameOriginal = entity.nameOriginal
-          temp.slug = entity.slug
-          temp.desc = entity.desc
-          temp.released = entity.released
-          temp.updated = entity.updated
-          temp.backgroundImage = entity.backgroundImage
-          temp.backgroundImageAdditional = entity.backgroundImageAdditional
-          temp.website = entity.website
-          temp.rating = entity.rating
-          temp.added = entity.added
-          temp.playtime = entity.playtime
-          temp.achievementsCount = entity.achievementsCount
-          temp.ratingsCount = entity.ratingsCount
-          temp.suggestionsCount = entity.suggestionsCount
-          temp.reviewsCount = entity.reviewsCount
-          temp.descriptionRaw = entity.descriptionRaw
+          temp.id = game.id
+          temp.name = game.name
+          temp.nameOriginal = game.nameOriginal
+          temp.slug = game.slug
+          temp.desc = game.desc
+          temp.released = game.released
+          temp.updated = game.updated
+          temp.backgroundImage = game.backgroundImage
+          temp.backgroundImageAdditional = game.backgroundImageAdditional
+          temp.website = game.website
+          temp.rating = game.rating
+          temp.added = game.added
+          temp.playtime = game.playtime
+          temp.achievementsCount = game.achievementsCount
+          temp.ratingsCount = game.ratingsCount
+          temp.suggestionsCount = game.suggestionsCount
+          temp.reviewsCount = game.reviewsCount
+          temp.descriptionRaw = game.descriptionRaw
 
-          temp.parentPlatforms.append(objectsIn: entity.parentPlatforms)
-          temp.platforms.append(objectsIn: entity.platforms)
-          temp.stores.append(objectsIn: entity.stores)
-          temp.developers.append(objectsIn: entity.developers)
-          temp.genres.append(objectsIn: entity.genres)
-          temp.tags.append(objectsIn: entity.tags)
-          temp.publishers.append(objectsIn: entity.publishers)
-          temp.parentPlatforms.append(objectsIn: entity.parentPlatforms)
+          temp.parentPlatforms.append(objectsIn: game.parentPlatforms)
+          temp.platforms.append(objectsIn: game.platforms)
+          temp.stores.append(objectsIn: game.stores)
+          temp.developers.append(objectsIn: game.developers)
+          temp.genres.append(objectsIn: game.genres)
+          temp.tags.append(objectsIn: game.tags)
+          temp.publishers.append(objectsIn: game.publishers)
+          temp.parentPlatforms.append(objectsIn: game.parentPlatforms)
 
           _realm.add(temp, update: .all)
           completion(.success(true))
@@ -114,42 +132,8 @@ public struct GetGamesLocaleDataSource: LocaleDataSource {
       }
     }.eraseToAnyPublisher()
   }
-  //Update game
-  public func updateGames(entity: GameModuleEntity) -> AnyPublisher<Bool, Error> {
-    return Future<Bool, Error> { completion in
-      do {
-        let currentData = _realm.objects(GameModuleEntity.self).where {
-          $0.id == entity.id
-      }.first!
-        //Update the all data that not added before
-        try _realm.write {
-          currentData.setValue(entity.slug, forKey: "slug")
-          currentData.setValue(entity.nameOriginal, forKey: "nameOriginal")
-          currentData.setValue(entity.desc, forKey: "desc")
-          currentData.setValue(entity.backgroundImageAdditional, forKey: "backgroundImageAdditional")
-          currentData.setValue(entity.website, forKey: "website")
-          currentData.setValue(entity.added, forKey: "added")
-          currentData.setValue(entity.playtime, forKey: "playtime")
-          currentData.setValue(entity.achievementsCount, forKey: "achievementsCount")
-          currentData.setValue(entity.ratingsCount, forKey: "ratingsCount")
-          currentData.setValue(entity.parentPlatforms, forKey: "parentPlatforms")
-          currentData.setValue(entity.platforms, forKey: "platforms")
-          currentData.setValue(entity.stores, forKey: "stores")
-          currentData.setValue(entity.developers, forKey: "developers")
-          currentData.setValue(entity.genres, forKey: "genres")
-          currentData.setValue(entity.tags, forKey: "tags")
-          currentData.setValue(entity.publishers, forKey: "publishers")
-          currentData.setValue(entity.descriptionRaw, forKey: "descriptionRaw")
-        }
-        completion(.success(true))
-      } catch {
-        completion(.failure(DatabaseError.requestFailed))
-      }
-    }.eraseToAnyPublisher()
-  }
   
-  //Get game detail
-  public func getDetailGame(id: Int) -> AnyPublisher<GameModuleEntity, Error> {
+  func getDetailGame(id: Int) -> AnyPublisher<GameModuleEntity, Error> {
     return Future<GameModuleEntity, Error> { completion in
       let detail: GameModuleEntity = {
         _realm.object(ofType: GameModuleEntity.self, forPrimaryKey: id)
@@ -158,19 +142,37 @@ public struct GetGamesLocaleDataSource: LocaleDataSource {
     }.eraseToAnyPublisher()
   }
   
-  public func get(id: String) -> AnyPublisher<GameModuleEntity, Error> {
-    fatalError()
-  }
-  
-  public func update(id: Int, entity: GameModuleEntity) -> AnyPublisher<Bool, Error> {
-    fatalError()
-  }
-  
-  public func update(id: Int, isFavorite: Bool) -> AnyPublisher<Bool, Error> {
-    fatalError()
-  }
-  
-  public func add(entities: GameModuleEntity) -> AnyPublisher<Bool, Error> {
-    fatalError()
+  func updateGames(gameEntity: GameModuleEntity) -> AnyPublisher<Bool, Error> {
+    return Future<Bool, Error> { completion in
+      do {
+        let currentData = _realm.objects(GameModuleEntity.self).where {
+          $0.id == gameEntity.id
+      }.first!
+        //Update the all data that not added before
+        
+        try _realm.write {
+          currentData.setValue(gameEntity.slug, forKey: "slug")
+          currentData.setValue(gameEntity.nameOriginal, forKey: "nameOriginal")
+          currentData.setValue(gameEntity.desc, forKey: "desc")
+          currentData.setValue(gameEntity.backgroundImageAdditional, forKey: "backgroundImageAdditional")
+          currentData.setValue(gameEntity.website, forKey: "website")
+          currentData.setValue(gameEntity.added, forKey: "added")
+          currentData.setValue(gameEntity.playtime, forKey: "playtime")
+          currentData.setValue(gameEntity.achievementsCount, forKey: "achievementsCount")
+          currentData.setValue(gameEntity.ratingsCount, forKey: "ratingsCount")
+          currentData.setValue(gameEntity.parentPlatforms, forKey: "parentPlatforms")
+          currentData.setValue(gameEntity.platforms, forKey: "platforms")
+          currentData.setValue(gameEntity.stores, forKey: "stores")
+          currentData.setValue(gameEntity.developers, forKey: "developers")
+          currentData.setValue(gameEntity.genres, forKey: "genres")
+          currentData.setValue(gameEntity.tags, forKey: "tags")
+          currentData.setValue(gameEntity.publishers, forKey: "publishers")
+          currentData.setValue(gameEntity.descriptionRaw, forKey: "descriptionRaw")
+        }
+        completion(.success(true))
+      } catch {
+        completion(.failure(DatabaseError.requestFailed))
+      }
+    }.eraseToAnyPublisher()
   }
 }
