@@ -7,10 +7,12 @@
 
 import Foundation
 import RealmSwift
+import UIKit
+
 import Core
 import Game
 import Favorite
-import UIKit
+import Search
 
 final class Injection: NSObject {
   
@@ -59,9 +61,13 @@ final class Injection: NSObject {
       return Interactor(repository: repository) as! U
   }
   
-  func provideSearch() -> SearchUseCase {
-    let repository = provideRepository()
-    return SearchInteractor(repository: repository)
+  func provideSearch<U: UseCase>() -> U where U.Request == Any, U.Response == [SearchDomainModel] {
+      let remote = GetSearchRemoteDataSource(endpoint: Endpoints.Gets.games.url)
+      let mapper = SearchTransformer()
+      let repository = GetSearchRepository(
+          remoteDataSource: remote,
+          mapper: mapper)
+      return Interactor(repository: repository) as! U
   }
 
 }

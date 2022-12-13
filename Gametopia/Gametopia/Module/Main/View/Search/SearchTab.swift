@@ -6,12 +6,12 @@
 //
 
 import SwiftUI
-
-import SwiftUI
 import Kingfisher
+import Core
+import Search
 
 struct SearchTab: View {
-  @ObservedObject var presenter: SearchPresenter
+  @ObservedObject var presenter: GetListPresenter<Any, SearchDomainModel, Interactor<Any, [SearchDomainModel], GetSearchRepository<GetSearchRemoteDataSource, SearchTransformer>>>
   @State var searchKeyword: String = ""
   @State var isLoading = false
   
@@ -24,23 +24,29 @@ struct SearchTab: View {
           text: $searchKeyword
         )
         .onSubmit {
-          presenter.getSearchResult(keyword: searchKeyword )
+          self.presenter.getSearchList(request: nil, keyword: searchKeyword)
         }
         .disableAutocorrection(true)
       }
       .padding(10)
       .background(Color(red: 68/255, green: 68/255, blue: 68/255))
       
-      if(presenter.loadingState){
+      if(presenter.isLoading){
         ShowLoading()
+      }else if(presenter.isError){
+        Text(presenter.errorMessage)
       }else{
-        if(!presenter.results.isEmpty){
+        if(!self.presenter.list.isEmpty){
           ScrollView(.vertical, showsIndicators: false){
             LazyVStack{
-              ForEach(presenter.results, id: \.self.id){ game in
-                self.presenter.linkBuilder(for: game.id!) {
+              ForEach(presenter.list, id: \.self.id){ game in
+                ZStack {
                   SearchResultItem(presenter: presenter, game: game)
-                }.buttonStyle(PlainButtonStyle())
+                 }.buttonStyle(PlainButtonStyle())
+                
+//                self.presenter.linkBuilder(for: game.id!) {
+//                  SearchResultItem(presenter: presenter, game: game)
+//                }.buttonStyle(PlainButtonStyle())
               }
             }
           }
@@ -128,8 +134,8 @@ struct ShowLoading: View {
 }
 
 struct SearchResultItem: View{
-  @ObservedObject var presenter: SearchPresenter
-  @State var game: SearchModel?
+  @ObservedObject var presenter: GetListPresenter<Any, SearchDomainModel, Interactor<Any, [SearchDomainModel], GetSearchRepository<GetSearchRemoteDataSource, SearchTransformer>>>
+  @State var game: SearchDomainModel?
   
   var body: some View {
     HStack{
@@ -195,7 +201,7 @@ struct SearchResultItem: View{
               .shape(type: .rectangle)
               .appearance(type: .solid(color: .yellow, background: .black))
             
-            Text("| Score: \(game?.score ?? "Unknown Score")")
+            Text("| Score : \(game?.score ?? "Unknown Score")")
               .foregroundColor(.white)
               .font(Font.custom("EvilEmpire", size: 14, relativeTo: .title))
               .skeleton(with: game == nil)

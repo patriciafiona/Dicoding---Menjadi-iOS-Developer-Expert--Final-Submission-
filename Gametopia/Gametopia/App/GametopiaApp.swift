@@ -7,8 +7,10 @@
 
 import SwiftUI
 import Core
+
 import Game
 import Favorite
+import Search
 
 @main
 struct GametopiaApp: App {
@@ -29,8 +31,14 @@ struct GametopiaApp: App {
         > = Injection.init().provideFavorite()
       let favoritePresenter = GetListPresenter(useCase: favoriteUseCase)
       
-      let seachUseCase = Injection.init().provideSearch()
-      let searchPresenter = SearchPresenter(searchUseCase: seachUseCase)
+      let seachUseCase: Interactor<
+          Any,
+          [SearchDomainModel],
+          GetSearchRepository<
+              GetSearchRemoteDataSource,
+              SearchTransformer>
+      > = Injection.init().provideSearch()
+      let searchPresenter = GetListPresenter(useCase: seachUseCase)
       
       SplashView()
         .environmentObject(homePresenter)

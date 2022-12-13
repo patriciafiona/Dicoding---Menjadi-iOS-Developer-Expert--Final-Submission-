@@ -8,14 +8,14 @@
 import Foundation
 
 public struct GamesResponse: Decodable {
-  let games: GameResponse
+  public let games: GameResponse
 }
 
 // MARK: - Welcome
 public struct GameResponse: Decodable {
     let count: Int?
     let next, previous: String?
-    let results: [GameResult]?
+    public let results: [GameResult]?
 }
 
 // MARK: - Result

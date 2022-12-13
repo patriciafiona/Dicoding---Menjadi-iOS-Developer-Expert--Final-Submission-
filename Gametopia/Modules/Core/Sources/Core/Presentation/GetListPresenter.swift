@@ -35,4 +35,23 @@ public class GetListPresenter<Request, Response, Interactor: UseCase>: Observabl
             })
             .store(in: &cancellables)
     }
+  
+    public func getSearchList(request: Request?, keyword: String) {
+        isLoading = true
+      _useCase.execute(request: request, keyword: keyword)
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    self.errorMessage = error.localizedDescription
+                    self.isError = true
+                    self.isLoading = false
+                case .finished:
+                    self.isLoading = false
+                }
+            }, receiveValue: { list in
+                self.list = list
+            })
+            .store(in: &cancellables)
+    }
 }

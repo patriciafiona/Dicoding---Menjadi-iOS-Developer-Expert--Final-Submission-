@@ -37,5 +37,22 @@ public struct GetGamesRemoteDataSource : DataSource {
           }
         }.eraseToAnyPublisher()
     }
+  
+  public func executeSearch(request: Request?, keyword: String) -> AnyPublisher<[GameResult], Error> {
+    return Future<[GameResult], Error> { completion in
+      if let url = URL(string: _endpoint) {
+        AF.request(url)
+          .validate()
+          .responseDecodable(of: GamesResponse.self) { response in
+            switch response.result {
+            case .success(let value):
+              completion(.success(value.games.results ?? []))
+            case .failure:
+              completion(.failure(URLError.invalidResponse))
+            }
+          }
+      }
+    }.eraseToAnyPublisher()
+  }
 }
 

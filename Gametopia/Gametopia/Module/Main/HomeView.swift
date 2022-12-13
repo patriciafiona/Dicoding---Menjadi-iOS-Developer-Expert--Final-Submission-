@@ -9,11 +9,12 @@ import SwiftUI
 import Core
 import Game
 import Favorite
+import Search
 
 struct HomeView: View {
   @ObservedObject var homePresenter: HomePresenter
   @ObservedObject var favoritePresenter: GetListPresenter<Any, DetailGameDomainModel, Interactor<Any, [DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
-  @ObservedObject var searchPresenter: SearchPresenter
+  @ObservedObject var searchPresenter: GetListPresenter<Any, SearchDomainModel, Interactor<Any, [SearchDomainModel], GetSearchRepository<GetSearchRemoteDataSource, SearchTransformer>>>
   
   @State var tabSelection: Tabs = .tabHome
   

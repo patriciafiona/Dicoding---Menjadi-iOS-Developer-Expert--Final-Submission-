@@ -16,8 +16,7 @@ where
     FavoriteLocaleDataSource.Response == GameModuleEntity,
     Transformer.Response == [GameResult],
     Transformer.Entity == [GameModuleEntity],
-    Transformer.Domain == [DetailGameDomainModel] {
-  
+Transformer.Domain == [DetailGameDomainModel] {
     public typealias Request = Any
     public typealias Response = [DetailGameDomainModel]
     
@@ -38,5 +37,14 @@ where
               .map { _mapper.transformEntityToDomain(entity: $0) }
               .eraseToAnyPublisher()
           }.eraseToAnyPublisher()
+    }
+  
+    public func execute(request: Request?, keyword: String) -> AnyPublisher<[DetailGameDomainModel], Error> {
+      return _localeDataSource.list(request: nil)
+        .flatMap { result -> AnyPublisher<[DetailGameDomainModel], Error> in
+          return _localeDataSource.list(request: nil)
+            .map { _mapper.transformEntityToDomain(entity: $0) }
+            .eraseToAnyPublisher()
+        }.eraseToAnyPublisher()
     }
 }

@@ -16,6 +16,7 @@
 		F78DEBE729458E78009F8575 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = F78DEBE629458E78009F8575 /* Core */; };
 		F78DEBF62945CD9D009F8575 /* Game in Frameworks */ = {isa = PBXBuildFile; productRef = F78DEBF52945CD9D009F8575 /* Game */; };
 		F78DEC102945D5CF009F8575 /* Favorite in Frameworks */ = {isa = PBXBuildFile; productRef = F78DEC0F2945D5CF009F8575 /* Favorite */; };
+		F78DEC17294779CC009F8575 /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = F78DEC16294779CC009F8575 /* Search */; };
 		F7B320722944AFF800D58B80 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B3200F2944AFF800D58B80 /* SplashView.swift */; };
 		F7B320732944AFF800D58B80 /* DiscoveryByRatingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B320122944AFF800D58B80 /* DiscoveryByRatingPresenter.swift */; };
 		F7B320742944AFF800D58B80 /* DiscoveryByRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B320142944AFF800D58B80 /* DiscoveryByRatingView.swift */; };
@@ -123,6 +124,7 @@
 		F786928D2944A7CD0063A717 /* GametopiaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GametopiaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F78DEBF42945C7C3009F8575 /* Game */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Game; path = Modules/Game; sourceTree = "<group>"; };
 		F78DEC0E2945D3CF009F8575 /* Favorite */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Favorite; path = Modules/Favorite; sourceTree = "<group>"; };
+		F78DEC15294779BB009F8575 /* SearchGame */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SearchGame; path = Modules/SearchGame; sourceTree = "<group>"; };
 		F7B318892944AEB000D58B80 /* VerminVibes.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = VerminVibes.ttf; sourceTree = "<group>"; };
 		F7B3188A2944AEB000D58B80 /* EvilEmpire.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilEmpire.ttf; sourceTree = "<group>"; };
 		F7B3188C2944AEB000D58B80 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F78DEC17294779CC009F8575 /* Search in Frameworks */,
 				F78DEBB129457FCC009F8575 /* Realm in Frameworks */,
 				F7B320D529456FE700D58B80 /* SDWebImageSwiftUI in Frameworks */,
 				F78DEBB329457FCC009F8575 /* RealmSwift in Frameworks */,
@@ -710,6 +713,7 @@
 				F7B320D229456DA700D58B80 /* Core */,
 				F78DEBF42945C7C3009F8575 /* Game */,
 				F78DEC0E2945D3CF009F8575 /* Favorite */,
+				F78DEC15294779BB009F8575 /* SearchGame */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -741,6 +745,7 @@
 				F78DEBE629458E78009F8575 /* Core */,
 				F78DEBF52945CD9D009F8575 /* Game */,
 				F78DEC0F2945D5CF009F8575 /* Favorite */,
+				F78DEC16294779CC009F8575 /* Search */,
 			);
 			productName = Gametopia;
 			productReference = F786926D2944A7CB0063A717 /* Gametopia.app */;
@@ -1335,6 +1340,10 @@
 		F78DEC0F2945D5CF009F8575 /* Favorite */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Favorite;
+		};
+		F78DEC16294779CC009F8575 /* Search */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Search;
 		};
 		F7B320B22944B0CA00D58B80 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

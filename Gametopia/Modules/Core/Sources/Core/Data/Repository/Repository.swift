@@ -13,4 +13,5 @@ public protocol Repository {
     associatedtype Response
     
     func execute(request: Request?) -> AnyPublisher<Response, Error>
+    func execute(request: Request?, keyword: String) -> AnyPublisher<Response, Error>
 }

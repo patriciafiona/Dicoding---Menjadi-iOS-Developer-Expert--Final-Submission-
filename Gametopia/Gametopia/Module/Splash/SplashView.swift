@@ -8,14 +8,15 @@
 import SwiftUI
 import Core
 import Favorite
+import Search
+import Game
 
 struct SplashView: View {
   @State var pushNewView: Bool = false
   
   @EnvironmentObject var homePresenter: HomePresenter
   @EnvironmentObject var favoritePresenter: GetListPresenter<Any, DetailGameDomainModel, Interactor<Any, [DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
-//  @EnvironmentObject var favoritePresenter: FavoritesPresenter
-  @EnvironmentObject var searchPresenter: SearchPresenter
+  @EnvironmentObject var searchPresenter: GetListPresenter<Any, SearchDomainModel, Interactor<Any, [SearchDomainModel], GetSearchRepository<GetSearchRemoteDataSource, SearchTransformer>>>
   
   var body: some View {
     NavigationView{
