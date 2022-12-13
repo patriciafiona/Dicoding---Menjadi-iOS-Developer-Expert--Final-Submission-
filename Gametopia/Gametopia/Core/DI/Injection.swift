@@ -52,7 +52,19 @@ final class Injection: NSObject {
     return MyFavoritesInteractor(repository: repository)
   }
   
-  func provideFavorite<U: UseCase>() -> U where U.Request == Any, U.Response == [DetailGameDomainModel] {
+  //From Module
+  func provideDiscoveryGame<U: UseCase>() -> U where U.Request == Any, U.Response == [GameDomainModel] {
+      let locale = GetGamesLocaleDataSource(realm: realm)
+      let remote = GetGamesRemoteDataSource(endpoint: Endpoints.Gets.games.url)
+      let mapper = GameTransformer()
+      let repository = GetGamesRepository(
+          localeDataSource: locale,
+          remoteDataSource: remote,
+          mapper: mapper)
+      return Interactor(repository: repository) as! U
+  }
+  
+  func provideFavorite<U: UseCase>() -> U where U.Request == Any, U.Response == [Favorite.DetailGameDomainModel] {
       let locale = GetFavoritesLocaleDataSource(realm: realm)
       let mapper = FavoriteTransformer()
       let repository = GetFavoritesRepository(

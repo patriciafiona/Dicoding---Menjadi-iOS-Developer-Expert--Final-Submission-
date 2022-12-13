@@ -32,11 +32,6 @@ public struct DetailGameDomainModel: Equatable, Identifiable {
   public let descriptionRaw: String?
 }
 
-public struct PlatformModel: Equatable, Identifiable {
-  public let id: UUID
-  public let name, slug: String?
-}
-
 public struct DetailPlatformDomainModel: Equatable, Identifiable {
     public let id: UUID
     public let platform: PlatformDetailsDomainModel?

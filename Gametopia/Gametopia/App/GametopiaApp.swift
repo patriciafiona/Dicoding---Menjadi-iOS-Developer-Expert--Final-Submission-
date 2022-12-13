@@ -18,12 +18,20 @@ struct GametopiaApp: App {
   
   var body: some Scene {
     WindowGroup {
-      let homeUseCase = Injection.init().provideHome()
-      let homePresenter = HomePresenter(homeUseCase: homeUseCase)
+      let gameUseCase: Interactor<
+          Any,
+          [GameDomainModel],
+          GetGamesRepository<
+              GetGamesLocaleDataSource,
+              GetGamesRemoteDataSource,
+              GameTransformer
+          >
+        > = Injection.init().provideDiscoveryGame()
+      let gamePresenter = GetListPresenter(useCase: gameUseCase)
       
       let favoriteUseCase: Interactor<
           Any,
-          [DetailGameDomainModel],
+          [Favorite.DetailGameDomainModel],
           GetFavoritesRepository<
               GetFavoritesLocaleDataSource,
               FavoriteTransformer
@@ -41,7 +49,7 @@ struct GametopiaApp: App {
       let searchPresenter = GetListPresenter(useCase: seachUseCase)
       
       SplashView()
-        .environmentObject(homePresenter)
+        .environmentObject(gamePresenter)
         .environmentObject(favoritePresenter)
         .environmentObject(searchPresenter)
     }

@@ -16,8 +16,6 @@ where
     Transformer.Response == [SearchResult],
     Transformer.Entity == [SearchModuleEntity],
 Transformer.Domain == [SearchDomainModel] {
-  
-  
     public typealias Request = Any
     public typealias Response = [SearchDomainModel]
     
@@ -33,15 +31,17 @@ Transformer.Domain == [SearchDomainModel] {
     }
   
   public func execute(request: Request?) -> AnyPublisher<[SearchDomainModel], Error> {
-    return _remoteDataSource.execute(request: nil)
-      .map { _mapper.transformResponseToDomain(response: $0) }
-      .eraseToAnyPublisher()
+    fatalError()
   }
     
   public func execute(request: Any?, keyword: String) -> AnyPublisher<[SearchDomainModel], Error> {
-    return _remoteDataSource.executeSearch(request: nil, keyword: keyword)
+    return _remoteDataSource.execute(request: nil, keyword: keyword)
       .map { _mapper.transformResponseToDomain(response: $0) }
       .eraseToAnyPublisher()
+  }
+  
+  public func execute(request: Request?, id: Int, isFavorite: Bool) -> AnyPublisher<Bool, Error> {
+    fatalError()
   }
 }
 

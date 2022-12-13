@@ -23,7 +23,7 @@ public struct GetSearchRemoteDataSource : DataSource {
     _endpoint = endpoint
   }
   
-  public func executeSearch(request: Any?, keyword: String) -> AnyPublisher<[SearchResult], Error> {
+  public func execute(request: Any?, keyword: String) -> AnyPublisher<[SearchResult], Error> {
     let param = ["key": apiKey, "search": keyword]
     return Future<[SearchResult], Error> { completion in
       if let url = URL(string: _endpoint) {
@@ -46,21 +46,11 @@ public struct GetSearchRemoteDataSource : DataSource {
   }
   
   public func execute(request: Request?) -> AnyPublisher<[SearchResult], Error> {
-    //return all game
-    return Future<[SearchResult], Error> { completion in
-      if let url = URL(string: _endpoint) {
-        AF.request(url)
-          .validate()
-          .responseDecodable(of: SearchResponse.self) { response in
-            switch response.result {
-            case .success(let value):
-              completion(.success(value.results ?? []))
-            case .failure:
-              completion(.failure(URLError.invalidResponse))
-            }
-          }
-      }
-    }.eraseToAnyPublisher()
+    fatalError()
+  }
+  
+  public func execute(request: Request?, id: Int, isFavorite: Bool) -> AnyPublisher<[SearchResult], Error> {
+    fatalError()
   }
 }
 

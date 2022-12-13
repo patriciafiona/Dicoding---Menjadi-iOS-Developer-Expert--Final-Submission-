@@ -12,8 +12,8 @@ import Favorite
 import Search
 
 struct HomeView: View {
-  @ObservedObject var homePresenter: HomePresenter
-  @ObservedObject var favoritePresenter: GetListPresenter<Any, DetailGameDomainModel, Interactor<Any, [DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  @ObservedObject var gamePresenter: GetListPresenter<Any, GameDomainModel, Interactor<Any, [GameDomainModel], GetGamesRepository<GetGamesLocaleDataSource, GetGamesRemoteDataSource, GameTransformer>>>
+  @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
   @ObservedObject var searchPresenter: GetListPresenter<Any, SearchDomainModel, Interactor<Any, [SearchDomainModel], GetSearchRepository<GetSearchRemoteDataSource, SearchTransformer>>>
   
   @State var tabSelection: Tabs = .tabHome
@@ -24,7 +24,10 @@ struct HomeView: View {
     var body: some View {
         NavigationView{
             TabView(selection: $tabSelection) {
-              HomeTab(presenter: homePresenter)
+              HomeTab(
+                favoritePresenter: favoritePresenter,
+                gamePresenter: gamePresenter
+              )
                  .tabItem {
                     Image(systemName: "house")
                     Text("Home")

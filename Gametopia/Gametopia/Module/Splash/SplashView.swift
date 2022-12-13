@@ -13,16 +13,15 @@ import Game
 
 struct SplashView: View {
   @State var pushNewView: Bool = false
-  
-  @EnvironmentObject var homePresenter: HomePresenter
-  @EnvironmentObject var favoritePresenter: GetListPresenter<Any, DetailGameDomainModel, Interactor<Any, [DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  @EnvironmentObject var gamePresenter: GetListPresenter<Any, GameDomainModel, Interactor<Any, [GameDomainModel], GetGamesRepository<GetGamesLocaleDataSource, GetGamesRemoteDataSource, GameTransformer>>>
+  @EnvironmentObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
   @EnvironmentObject var searchPresenter: GetListPresenter<Any, SearchDomainModel, Interactor<Any, [SearchDomainModel], GetSearchRepository<GetSearchRemoteDataSource, SearchTransformer>>>
   
   var body: some View {
     NavigationView{
       NavigationLink(isActive: $pushNewView) {
         HomeView(
-          homePresenter: homePresenter,
+          gamePresenter: gamePresenter,
           favoritePresenter: favoritePresenter,
           searchPresenter: searchPresenter
         )

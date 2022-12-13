@@ -9,17 +9,17 @@ import Core
 import Game
 
 public struct FavoriteTransformer: Mapper {
-  public typealias Response = [GameResult]
+  public typealias Response = Bool
   public typealias Entity = [GameModuleEntity]
   public typealias Domain = [DetailGameDomainModel]
   
   public init() {}
   
-  public func transformResponseToDomain(response: [GameResult]) -> [DetailGameDomainModel] {
+  public func transformResponseToDomain(response: Bool) -> [DetailGameDomainModel] {
     return []
   }
   
-  public func transformResponseToEntity(response: [GameResult]) -> [GameModuleEntity] {
+  public func transformResponseToEntity(response: Bool) -> [GameModuleEntity] {
     return []
   }
   

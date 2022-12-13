@@ -9,9 +9,16 @@ import SwiftUI
 import Kingfisher
 import SkeletonUI
 
+import Core
+import Game
+import Favorite
+
 struct GameItem: View {
-  @ObservedObject var presenter: HomePresenter
-  @State var game: DetailGameModel
+  @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  @ObservedObject var gamePresenter: GetListPresenter<Any, GameDomainModel, Interactor<Any, [GameDomainModel], GetGamesRepository<GetGamesLocaleDataSource, GetGamesRemoteDataSource, GameTransformer>>>
+  
+//  @State var game: Game.DetailGameDomainModel
+  @State var game: GameDomainModel
   @State private var _isFavorite: Bool = false
   
   private var scale: CGFloat {
@@ -84,8 +91,8 @@ struct GameItem: View {
           }
           Button(action: {
             _isFavorite = !_isFavorite
-            presenter.updateFavoriteGame(id: game.id!, isFavorite: _isFavorite)
-            presenter.getGames()
+            favoritePresenter.updateFavorite(request: nil, id: game.id!, isFavorite: _isFavorite)
+            gamePresenter.getList(request: nil )
           }) {
             Image(
               systemName: _isFavorite == true ? "heart.circle.fill" : "heart.circle"
@@ -104,7 +111,7 @@ struct GameItem: View {
       .background(Color(red: 67/255, green: 67/255, blue: 67/255))
       .cornerRadius(10)
       .onAppear{
-        _isFavorite = game.isFavorite ?? false
+//        _isFavorite = game.isFavorite ?? false
       }
     }
 }

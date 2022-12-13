@@ -20,8 +20,6 @@ protocol GametopiaRepositoryProtocol {
   func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error>
   
   func getAllFavoriteGame() -> AnyPublisher<[DetailGameModel], Error>
-  
-  func getSearchGameResult(keyword: String) -> AnyPublisher<[SearchModel], Error>
 }
 
 final class GametopiaRepository: NSObject {
@@ -53,18 +51,6 @@ extension GametopiaRepository: GametopiaRepositoryProtocol {
           .eraseToAnyPublisher()
       }.eraseToAnyPublisher()
   }
-  
-  func getSearchGameResult(keyword: String) -> AnyPublisher<[SearchModel], Error> {
-    return self.remote.getSearchResults(keyword: keyword)
-      .flatMap { result -> AnyPublisher<[SearchModel], Error> in
-        return self.remote.getSearchResults(keyword: keyword)
-          .flatMap { _ in self.remote.getSearchResults(keyword: keyword)
-            .map { SearchMapper.mapSearchResponsesToDomains(input: $0) }
-          }
-          .eraseToAnyPublisher()
-      }.eraseToAnyPublisher()
-  }
-  
   
   func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error> {
     return self.locale.getDetailGame(id: id )

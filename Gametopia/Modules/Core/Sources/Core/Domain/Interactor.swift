@@ -17,5 +17,9 @@ where R.Request == Request, R.Response == Response {
     public func execute(request: Request?, keyword: String) -> AnyPublisher<Response, Error> {
       _repository.execute(request: request, keyword: keyword)
     }
+  
+    public func execute(request: Request?, id: Int, isFavorite: Bool) -> AnyPublisher<Bool, Error> {
+      _repository.execute(request: request, id: id, isFavorite: isFavorite)
+    }
 }
 

@@ -8,12 +8,18 @@
 import SwiftUI
 import Lottie
 
+import Core
+import Game
+import Favorite
+
 struct HomeTab: View {
-  @ObservedObject var presenter: HomePresenter
+  @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  @ObservedObject var gamePresenter: GetListPresenter<Any, GameDomainModel, Interactor<Any, [GameDomainModel], GetGamesRepository<GetGamesLocaleDataSource, GetGamesRemoteDataSource, GameTransformer>>>
+  @State var game: Game.DetailGameDomainModel?
   
   var body: some View {
     ZStack {
-      if presenter.loadingState {
+      if gamePresenter.isLoading {
         ZStack{
           LottieView(
             name: "loading",
@@ -62,21 +68,25 @@ struct HomeTab: View {
               HStack {
                 TitleSubtitle(title: "Discovery", subtitle: "Based on best rating")
                 Spacer()
-                self.presenter.discoveryLinkBuilder() {
-                  Image(
-                    systemName: "arrow.right.circle"
-                  )
-                  .tint(Color.yellow)
-                }.buttonStyle(PlainButtonStyle())
+                Image(
+                  systemName: "arrow.right.circle"
+                )
+                .tint(Color.yellow)
+//                self.presenter.discoveryLinkBuilder() {
+//                  Image(
+//                    systemName: "arrow.right.circle"
+//                  )
+//                  .tint(Color.yellow)
+//                }.buttonStyle(PlainButtonStyle())
               }
               
               ScrollView(.horizontal, showsIndicators: false){
-                if presenter.discoveryLoadingState{
+                if gamePresenter.isLoading{
                   LazyHStack{
                     ForEach(1..<5) { index in
                       //Empty Skeleton View
                       Rectangle()
-                      .skeleton(with: presenter.discoveryLoadingState)
+                      .skeleton(with: gamePresenter.isLoading)
                       .shape(type: .rectangle)
                       .appearance(type: .solid(color: .yellow, background: .black))
                       .frame(
@@ -88,16 +98,26 @@ struct HomeTab: View {
                 }else{
                   LazyHStack{
                     ForEach(
-                      self.presenter.games,
+                      gamePresenter.list,
                       id: \.id
                     ) { game in
                       ZStack {
-                        self.presenter.linkBuilder(for: game.id!) {
-                          GameItem(
-                            presenter: presenter, game: game
-                          )
-                        }.buttonStyle(PlainButtonStyle())
-                      }.padding(8)
+                        GameItem(
+                          favoritePresenter: favoritePresenter,
+                          gamePresenter: gamePresenter,
+                          game: game
+                        )
+                       }.buttonStyle(PlainButtonStyle())
+                      
+//                      ZStack {
+//                        self.presenter.linkBuilder(for: game.id!) {
+//                          GameItem(
+//                            favoritePresenter: favoritePresenter,
+//                            presenter: gamePresenter,
+//                            game: game
+//                          )
+//                        }.buttonStyle(PlainButtonStyle())
+//                      }.padding(8)
                     }
                   }
                 }
@@ -109,7 +129,7 @@ struct HomeTab: View {
             //Genre section
             Group{
               TitleSubtitle(title: "Genres", subtitle: "Find your game genre here")
-              GenreGridView(presenter: self.presenter)
+//              GenreGridView(presenter: self.presenter)
             }
             
             
@@ -119,16 +139,16 @@ struct HomeTab: View {
             Group{
               TitleSubtitle(title: "Developers", subtitle: "Find your favorite developer here")
               
-              ScrollView(.vertical, showsIndicators: false){
-                LazyVStack{
-                  ForEach(
-                    self.presenter.developers,
-                    id: \.id
-                  ) { developer in
-                    DeveloperItem(developer: developer, presenter: presenter)
-                  }
-                }
-              }.frame(maxHeight: 800)
+//              ScrollView(.vertical, showsIndicators: false){
+//                LazyVStack{
+//                  ForEach(
+//                    self.presenter.developers,
+//                    id: \.id
+//                  ) { developer in
+//                    DeveloperItem(developer: developer, presenter: presenter)
+//                  }
+//                }
+//              }.frame(maxHeight: 800)
             }
             
           }
@@ -143,11 +163,11 @@ struct HomeTab: View {
         }
       }
     }.onAppear {
-      self.presenter.getGames()
-      self.presenter.getGenres()
-      self.presenter.getDevelopers()
+      self.gamePresenter.getList(request: nil)
+//      self.presenter.getGenres()
+//      self.presenter.getDevelopers()
       
-      self.presenter.objectWillChange.send()
+      self.gamePresenter.objectWillChange.send()
       
       //tab bar appearance
       let tabBarAppearance = UITabBarAppearance()

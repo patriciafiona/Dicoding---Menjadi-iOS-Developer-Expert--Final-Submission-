@@ -6,6 +6,7 @@ public protocol DataSource {
     associatedtype Response
     
     func execute(request: Request?) -> AnyPublisher<Response, Error>
-    func executeSearch(request: Request?, keyword: String) -> AnyPublisher<Response, Error>
+    func execute(request: Request?, keyword: String) -> AnyPublisher<Response, Error>
+  func execute(request: Request?, id: Int, isFavorite: Bool) -> AnyPublisher<Response, Error>
 }
 

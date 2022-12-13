@@ -18,6 +18,7 @@ GameLocaleDataSource.Response == GameModuleEntity,
     Transformer.Response == [GameResult],
     Transformer.Entity == [GameModuleEntity],
 Transformer.Domain == [GameDomainModel] {
+  
     public typealias Request = Any
     public typealias Response = [GameDomainModel]
     
@@ -57,23 +58,14 @@ Transformer.Domain == [GameDomainModel] {
     }
   
     public func execute(request: Request?, keyword: String) -> AnyPublisher<[GameDomainModel], Error> {
-      return _localeDataSource.list(request: nil)
-        .flatMap { result -> AnyPublisher<[GameDomainModel], Error> in
-          if result.isEmpty {
-            return _remoteDataSource.execute(request: nil)
-              .map { _mapper.transformResponseToEntity(response: $0) }
-              .catch { _ in _localeDataSource.list(request: nil) }
-              .flatMap { _localeDataSource.add(entities: $0) }
-              .filter { $0 }
-              .flatMap { _ in _localeDataSource.list(request: nil)
-                .map { _mapper.transformEntityToDomain(entity: $0) }
-              }
-              .eraseToAnyPublisher()
-          } else {
-            return _localeDataSource.list(request: nil)
-              .map { _mapper.transformEntityToDomain(entity: $0) }
-              .eraseToAnyPublisher()
-          }
-        }.eraseToAnyPublisher()
+      fatalError()
     }
+  
+    public func execute(request: Request?, id: Int, isFavorite: Bool) -> AnyPublisher<[GameDomainModel], Error> {
+      fatalError()
+    }
+  
+  public func execute(request: Request?, id: Int, isFavorite: Bool) -> AnyPublisher<Bool, Error> {
+    fatalError()
+  }
 }
