@@ -8,9 +8,10 @@
 import SwiftUI
 import Kingfisher
 import SkeletonUI
+import Genre
 
 struct GenreItem: View {
-    var genre: GenreModel
+    var genre: GenreDomainModel
   
     var body: some View {
       ZStack{
@@ -42,7 +43,7 @@ struct GenreItem: View {
 }
 
 private struct GenreHeaderOverlay: View{
-    var genre: GenreModel
+    var genre: GenreDomainModel
     
     var gradient: LinearGradient {
         .linearGradient(

@@ -10,10 +10,12 @@ import Core
 import Favorite
 import Search
 import Game
+import Genre
 
 struct SplashView: View {
   @State var pushNewView: Bool = false
   @EnvironmentObject var gamePresenter: GamePresenter
+  @EnvironmentObject var genrePresenter: GenrePresenter
   @EnvironmentObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
   @EnvironmentObject var searchPresenter: GetListPresenter<Any, SearchDomainModel, Interactor<Any, [SearchDomainModel], GetSearchRepository<GetSearchRemoteDataSource, SearchTransformer>>>
   
@@ -22,6 +24,7 @@ struct SplashView: View {
       NavigationLink(isActive: $pushNewView) {
         HomeView(
           gamePresenter: gamePresenter,
+          genrePresenter: genrePresenter,
           favoritePresenter: favoritePresenter,
           searchPresenter: searchPresenter
         )

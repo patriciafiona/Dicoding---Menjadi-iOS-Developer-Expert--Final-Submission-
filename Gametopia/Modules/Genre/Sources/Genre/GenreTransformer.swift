@@ -1,20 +1,20 @@
 //
-//  GenreMapper.swift
-//  Gametopia
+//  File.swift
+//  
 //
-//  Created by Patricia Fiona on 20/11/22.
+//  Created by Patricia Fiona on 14/12/22.
 //
 
 import Foundation
 import RealmSwift
 
-final class GenreMapper {
+public final class GenreTransformer {
   
   static func mapGenresResponsesToEntities(
     input genreResponses: [GenreResult]
-  ) -> [GenreEntity] {
+  ) -> [GenreModuleEntity] {
     return genreResponses.map { result in
-      let newGenre = GenreEntity()
+      let newGenre = GenreModuleEntity()
       
       newGenre.id = result.id ?? 0
       newGenre.name = result.name ?? "Unknown Name"
@@ -40,8 +40,8 @@ final class GenreMapper {
   
   static func mapGenresResponsesToEntity(
     input result: DetailGenreResponse
-  ) -> GenreEntity {
-    let newGenre = GenreEntity()
+  ) -> GenreModuleEntity {
+    let newGenre = GenreModuleEntity()
     
     newGenre.id = result.id ?? 0
     newGenre.name = result.name ?? "Unknown Name"
@@ -53,10 +53,10 @@ final class GenreMapper {
   }
 
   static func mapGenresEntitiesToDomains(
-    input genreEntities: [GenreEntity]
-  ) -> [GenreModel] {
+    input genreEntities: [GenreModuleEntity]
+  ) -> [GenreDomainModel] {
     return genreEntities.map { result in
-      return GenreModel(
+      return GenreDomainModel(
         id: Int(result.id),
         name: result.name,
         slug: result.slug,
@@ -75,9 +75,9 @@ final class GenreMapper {
   }
   
   static func mapGenresEntityToDomains(
-    input result: GenreEntity
-  ) -> GenreModel {
-    return GenreModel(
+    input result: GenreModuleEntity
+  ) -> GenreDomainModel {
+    return GenreDomainModel(
       id: Int(result.id),
       name: result.name,
       slug: result.slug,
@@ -97,10 +97,10 @@ final class GenreMapper {
   
   static func mapGenreResponsesToDomains(
     input genreResponses: [GenreResult]
-  ) -> [GenreModel] {
+  ) -> [GenreDomainModel] {
     
     return genreResponses.map { result in
-      return GenreModel(
+      return GenreDomainModel(
         id: result.id ?? 0,
         name: result.name ?? "Unknown Name",
         slug: result.slug ?? "Unknown Slug",

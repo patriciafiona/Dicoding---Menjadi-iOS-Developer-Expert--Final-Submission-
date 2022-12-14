@@ -10,11 +10,6 @@ import RealmSwift
 import Combine
 
 protocol LocaleDataSourceProtocol: AnyObject {
-  func getGenres() -> AnyPublisher<[GenreEntity], Error>
-  func addGenres(from genres: [GenreEntity]) -> AnyPublisher<Bool, Error>
-  func updateGenre(id: Int, desc: String) -> AnyPublisher<Bool, Error>
-  func getDetailGenre(id: Int) -> AnyPublisher<GenreEntity, Error>
-  
   func getDevelopers() -> AnyPublisher<[DeveloperEntity], Error>
   func addDevelopers(from developers: [DeveloperEntity]) -> AnyPublisher<Bool, Error>
   
@@ -86,83 +81,6 @@ extension LocaleDataSource: LocaleDataSourceProtocol {
             .sorted(byKeyPath: "rating", ascending: !sortedFromBest)
         }()
         completion(.success(detailGames.toArray(ofType: GameEntity.self, limit: 10)))
-      } else {
-        completion(.failure(DatabaseError.invalidInstance))
-      }
-    }.eraseToAnyPublisher()
-  }
-  
-  func getDetailGenre(id: Int) -> AnyPublisher<GenreEntity, Error> {
-    return Future<GenreEntity, Error> { completion in
-      if let realm = self.realm {
-        let genre: GenreEntity = {
-          realm.object(ofType: GenreEntity.self, forPrimaryKey: id)
-        }() ?? GenreEntity()
-        completion(.success(genre))
-      } else {
-        completion(.failure(DatabaseError.invalidInstance))
-      }
-    }.eraseToAnyPublisher()
-  }
-  
-  func updateGenre(id: Int, desc: String) -> AnyPublisher<Bool, Error> {
-    return Future<Bool, Error> { completion in
-      if let realm = self.realm {
-        do {
-          let currentData = realm.objects(GenreEntity.self).where {
-            $0.id == id
-        }.first!
-          //Update the nil description
-          try realm.write {
-            currentData.setValue(desc, forKey: "desc")
-          }
-          completion(.success(true))
-        } catch {
-          completion(.failure(DatabaseError.requestFailed))
-        }
-      } else {
-        completion(.failure(DatabaseError.invalidInstance))
-      }
-    }.eraseToAnyPublisher()
-  }
-  
-  func getGenres() -> AnyPublisher<[GenreEntity], Error> {
-    return Future<[GenreEntity], Error> { completion in
-      if let realm = self.realm {
-        let genres: Results<GenreEntity> = {
-          realm.objects(GenreEntity.self)
-            .sorted(byKeyPath: "name", ascending: true)
-        }()
-        completion(.success(genres.toArray(ofType: GenreEntity.self)))
-      } else {
-        completion(.failure(DatabaseError.invalidInstance))
-      }
-    }.eraseToAnyPublisher()
-  }
- 
-  func addGenres(
-    from genres: [GenreEntity]
-  ) -> AnyPublisher<Bool, Error> {
-    return Future<Bool, Error> { completion in
-      if let realm = self.realm {
-        do {
-          try realm.write {
-            for genre in genres {
-              //Should be manual because need to change from game array to game list
-              let temp = GenreEntity()
-              temp.id = genre.id
-              temp.name = genre.name
-              temp.slug = genre.slug
-              temp.gameCount = genre.gameCount
-              temp.imageBackground = genre.imageBackground
-              temp.games.append(objectsIn: genre.games)
-              realm.add(temp, update: .all)
-            }
-            completion(.success(true))
-          }
-        } catch {
-          completion(.failure(DatabaseError.requestFailed))
-        }
       } else {
         completion(.failure(DatabaseError.invalidInstance))
       }

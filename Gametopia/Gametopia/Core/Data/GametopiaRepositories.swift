@@ -12,9 +12,6 @@ protocol GametopiaRepositoryProtocol {
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameModel], Error>
   func getFewDiscoveryGame() -> AnyPublisher<[DetailGameModel], Error>
   
-  func getListGenres() -> AnyPublisher<[GenreModel], Error>
-  func getGenreDetail(id: Int) -> AnyPublisher<GenreModel, Error>
-  
   func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error>
   func getGameDetail(id: Int, isAdd: Bool) -> AnyPublisher<DetailGameModel, Error>
   func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error>
@@ -99,26 +96,6 @@ extension GametopiaRepository: GametopiaRepositoryProtocol {
       }.eraseToAnyPublisher()
   }
   
-  func getListGenres() -> AnyPublisher<[GenreModel], Error> {
-    return self.locale.getGenres()
-      .flatMap { result -> AnyPublisher<[GenreModel], Error> in
-        if result.isEmpty {
-          return self.remote.getListGenres()
-            .map { GenreMapper.mapGenresResponsesToEntities(input: $0) }
-            .flatMap { self.locale.addGenres(from: $0) }
-            .filter { $0 }
-            .flatMap { _ in self.locale.getGenres()
-              .map { GenreMapper.mapGenresEntitiesToDomains(input: $0) }
-            }
-            .eraseToAnyPublisher()
-        } else {
-          return self.locale.getGenres()
-            .map { GenreMapper.mapGenresEntitiesToDomains(input: $0) }
-            .eraseToAnyPublisher()
-        }
-      }.eraseToAnyPublisher()
-  }
-  
   func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error> {
     return self.locale.getDevelopers()
       .flatMap { result -> AnyPublisher<[DeveloperModel], Error> in
@@ -160,28 +137,6 @@ extension GametopiaRepository: GametopiaRepositoryProtocol {
         } else {
           return self.locale.getDetailGame(id: id )
             .map { DetailGameMapper.mapDetailGameEntityToDomain(input: $0) }
-            .eraseToAnyPublisher()
-        }
-      }.eraseToAnyPublisher()
-  }
-  
-  func getGenreDetail(id: Int) -> AnyPublisher<GenreModel, Error> {
-    return self.locale.getDetailGenre(id: id )
-      .flatMap { result -> AnyPublisher<GenreModel, Error> in
-        if result.desc.elementsEqual("Unknown Description") {
-          return self.remote.getGenreDetails(id: id)
-            .map { GenreMapper.mapGenresResponsesToEntity(input: $0) }
-            .flatMap { res in
-              self.locale.updateGenre(id: id, desc: res.desc)
-            }
-            .filter { $0 }
-            .flatMap { _ in self.locale.getDetailGenre(id: id )
-              .map { GenreMapper.mapGenresEntityToDomains(input: $0) }
-            }
-            .eraseToAnyPublisher()
-        } else {
-          return self.locale.getDetailGenre(id: id )
-            .map { GenreMapper.mapGenresEntityToDomains(input: $0) }
             .eraseToAnyPublisher()
         }
       }.eraseToAnyPublisher()

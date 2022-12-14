@@ -10,9 +10,11 @@ import Core
 import Game
 import Favorite
 import Search
+import Genre
 
 struct HomeView: View {
   @ObservedObject var gamePresenter: GamePresenter
+  @ObservedObject var genrePresenter: GenrePresenter
   @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
   @ObservedObject var searchPresenter: GetListPresenter<Any, SearchDomainModel, Interactor<Any, [SearchDomainModel], GetSearchRepository<GetSearchRemoteDataSource, SearchTransformer>>>
   
@@ -25,6 +27,7 @@ struct HomeView: View {
         NavigationView{
             TabView(selection: $tabSelection) {
               HomeTab(
+                genrePresenter: genrePresenter,
                 favoritePresenter: favoritePresenter,
                 gamePresenter: gamePresenter
               )

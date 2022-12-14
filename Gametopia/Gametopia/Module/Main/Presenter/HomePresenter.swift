@@ -45,25 +45,6 @@ class HomePresenter: ObservableObject {
       .store(in: &cancellables)
   }
   
-  func getGenres() {
-    loadingState = true
-    homeUseCase.getListGenres()
-      .receive(on: RunLoop.main)
-      .sink(receiveCompletion: { completion in
-        switch completion {
-        case .failure:
-          self.errorMessage = String(describing: completion)
-          print("Get Genre ERROR: \(completion)")
-        case .finished:
-          self.loadingState = false
-          print("Get Genre FINISHED")
-        }
-      }, receiveValue: { genres in
-        self.genres = genres
-      })
-      .store(in: &cancellables)
-  }
-  
   func getDevelopers() {
     loadingState = true
     homeUseCase.getListDevelopers()
@@ -126,14 +107,6 @@ class HomePresenter: ObservableObject {
       destination: router.makeDiscoverByRatingView()
     ) { content() }
   }
-  
-  func genreLinkBuilder<Content: View>(
-    for id: Int,
-    @ViewBuilder content: () -> Content
-  ) -> some View {
-    NavigationLink(
-      destination: router.makeDetailGenreView(for: id )
-    ) { content() }
-  }
+
   
 }

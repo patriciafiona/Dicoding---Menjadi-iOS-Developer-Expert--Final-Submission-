@@ -11,6 +11,7 @@ import Core
 import Game
 import Favorite
 import Search
+import Genre
 
 @main
 struct GametopiaApp: App {
@@ -18,7 +19,10 @@ struct GametopiaApp: App {
   
   var body: some Scene {
     WindowGroup {
-      let gameUseCase: GameInteractor = Injection.init().provideGame() as! GameInteractor
+      let genreUseCase: GenreInteractor = Injection.init().provideGenre()
+      let genrePresenter = GenrePresenter(useCase: genreUseCase)
+      
+      let gameUseCase: GameInteractor = Injection.init().provideGame()
       let gamePresenter = GamePresenter(useCase: gameUseCase)
       
       let favoriteUseCase: Interactor<
@@ -42,6 +46,7 @@ struct GametopiaApp: App {
       
       SplashView()
         .environmentObject(gamePresenter)
+        .environmentObject(genrePresenter)
         .environmentObject(favoritePresenter)
         .environmentObject(searchPresenter)
     }

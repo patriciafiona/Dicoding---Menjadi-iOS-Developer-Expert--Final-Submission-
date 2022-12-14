@@ -8,11 +8,12 @@
 import SwiftUI
 import Kingfisher
 import SkeletonUI
+import Genre
 
 struct DetailGenreView: View {
-  @ObservedObject var presenter: DetailGenrePresenter
+  @ObservedObject var presenter: GenrePresenter
   
-  init(presenter: DetailGenrePresenter) {
+  init(presenter: GenrePresenter) {
       self.presenter = presenter
       
       let navBarAppearance = UINavigationBar.appearance()
@@ -28,7 +29,7 @@ struct DetailGenreView: View {
 
 struct RootGenreContent: View{
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var presenter: DetailGenrePresenter
+    @ObservedObject var presenter: GenrePresenter
     
     var body: some View{
         NavigationView {
@@ -89,14 +90,21 @@ struct RootGenreContent: View{
                         LazyVStack(alignment: .leading){
                           ForEach(presenter.detailGenre!.games, id: \.id){ game in
                             ZStack{
-                              self.presenter.linkBuilder(for: game.id!) {
-                                Text(game.name)
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 16))
-                                    .underline()
-                                    .padding(.bottom, 10)
+                              Text(game.name)
+                                  .foregroundColor(.white)
+                                  .font(.system(size: 16))
+                                  .underline()
+                                  .padding(.bottom, 10)
                               }.buttonStyle(PlainButtonStyle())
-                            }
+//                            ZStack{
+//                              self.presenter.linkBuilder(for: game.id!) {
+//                                Text(game.name)
+//                                    .foregroundColor(.white)
+//                                    .font(.system(size: 16))
+//                                    .underline()
+//                                    .padding(.bottom, 10)
+//                              }.buttonStyle(PlainButtonStyle())
+//                            }
                           }
                         }
                         .skeleton(with: presenter.detailGenre?.games == nil)

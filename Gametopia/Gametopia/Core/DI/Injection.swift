@@ -13,6 +13,7 @@ import Core
 import Game
 import Favorite
 import Search
+import Genre
 
 final class Injection: NSObject {
   
@@ -37,11 +38,6 @@ final class Injection: NSObject {
     return DetailInteractor(repository: repository, id: id, isAdd: isAdd)
   }
   
-  func provideDetailGenre(id: Int) -> DetailGenreUseCase {
-    let repository = provideRepository()
-    return DetailGenreInteractor(repository: repository, id: id)
-  }
-  
   func provideDiscoveryByRating() -> DiscoveryByRatingUseCase {
     let repository = provideRepository()
     return DiscoveryByRatingInteractor(repository: repository)
@@ -53,9 +49,14 @@ final class Injection: NSObject {
   }
   
   //From Module
-  func provideGame() -> GameUseCase {
+  func provideGame() -> GameInteractor {
     let repository = GetGamesRepository(locale: GetGamesLocaleDataSource(realm: realm), remote: GetGamesRemoteDataSource())
     return GameInteractor(repository: repository)
+  }
+  
+  func provideGenre() -> GenreInteractor {
+    let repository = GetGenresRepository(locale: GetGenresLocaleDataSource(realm: realm), remote: GetGenresRemoteDataSource())
+    return GenreInteractor(repository: repository, id: 0) //default value for id
   }
   
   func provideFavorite<U: UseCase>() -> U where U.Request == Any, U.Response == [Favorite.DetailGameDomainModel] {

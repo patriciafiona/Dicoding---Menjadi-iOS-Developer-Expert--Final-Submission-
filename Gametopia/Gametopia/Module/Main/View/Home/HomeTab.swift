@@ -11,8 +11,10 @@ import Lottie
 import Core
 import Game
 import Favorite
+import Genre
 
 struct HomeTab: View {
+  @ObservedObject var genrePresenter: GenrePresenter
   @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
   @ObservedObject var gamePresenter: GamePresenter
   @State var game: Game.DetailGameDomainModel?
@@ -68,6 +70,7 @@ struct HomeTab: View {
               HStack {
                 TitleSubtitle(title: "Discovery", subtitle: "Based on best rating")
                 Spacer()
+                
                 Image(
                   systemName: "arrow.right.circle"
                 )
@@ -129,7 +132,7 @@ struct HomeTab: View {
             //Genre section
             Group{
               TitleSubtitle(title: "Genres", subtitle: "Find your game genre here")
-//              GenreGridView(presenter: self.presenter)
+              GenreGridView(presenter: self.genrePresenter)
             }
             
             
@@ -164,7 +167,7 @@ struct HomeTab: View {
       }
     }.onAppear {
       self.gamePresenter.getGames()
-//      self.presenter.getGenres()
+      self.genrePresenter.getGenres()
 //      self.presenter.getDevelopers()
       
       self.gamePresenter.objectWillChange.send()
@@ -235,7 +238,7 @@ struct HomeCarouselContent: View {
 }
 
 struct GenreGridView: View{
-  @State var presenter: HomePresenter
+  @State var presenter: GenrePresenter
   var body: some View {
     let columns = [
         GridItem(.flexible()),
@@ -244,11 +247,15 @@ struct GenreGridView: View{
     ScrollView {
         LazyVGrid(columns: columns, spacing: 10) {
             ForEach(presenter.genres, id: \.id) { genre in
-              ZStack{
-                self.presenter.genreLinkBuilder(for: genre.id!) {
+              ZStack {
                   GenreItem(genre: genre)
-                }.buttonStyle(PlainButtonStyle())
-              }
+               }.buttonStyle(PlainButtonStyle())
+              
+//              ZStack{
+//                self.presenter.genreLinkBuilder(for: genre.id!) {
+//                  GenreItem(genre: genre)
+//                }.buttonStyle(PlainButtonStyle())
+//              }
             }
         }
         .padding(.horizontal)

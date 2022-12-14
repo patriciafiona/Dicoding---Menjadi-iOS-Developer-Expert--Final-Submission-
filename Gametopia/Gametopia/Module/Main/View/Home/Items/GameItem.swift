@@ -97,7 +97,7 @@ struct GameItem: View {
               systemName: _isFavorite == true ? "heart.circle.fill" : "heart.circle"
             )
             .font(.system(size: 18))
-            .tint(_isFavorite == true ?.red : .gray)
+            .foregroundColor(_isFavorite == true ? .red : .gray)
           }
         }
         .padding(10)
