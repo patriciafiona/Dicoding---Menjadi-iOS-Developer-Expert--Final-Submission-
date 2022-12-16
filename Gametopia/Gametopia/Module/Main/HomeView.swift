@@ -11,12 +11,14 @@ import Game
 import Favorite
 import Search
 import Genre
+import Developer
 
 struct HomeView: View {
   @ObservedObject var gamePresenter: GamePresenter
   @ObservedObject var genrePresenter: GenrePresenter
   @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
   @ObservedObject var searchPresenter: GetListPresenter<Any, SearchDomainModel, Interactor<Any, [SearchDomainModel], GetSearchRepository<GetSearchRemoteDataSource, SearchTransformer>>>
+  @ObservedObject var developerPresenter: GetListPresenter<Any, DeveloperDomainModel, Interactor<Any, [DeveloperDomainModel], GetDevelopersRepository<GetDevelopersLocaleDataSource, GetDevelopersRemoteDataSource, DeveloperTransformer>>>
   
   @State var tabSelection: Tabs = .tabHome
   
@@ -29,6 +31,7 @@ struct HomeView: View {
               HomeTab(
                 genrePresenter: genrePresenter,
                 favoritePresenter: favoritePresenter,
+                developerPresenter: developerPresenter,
                 gamePresenter: gamePresenter
               )
                  .tabItem {

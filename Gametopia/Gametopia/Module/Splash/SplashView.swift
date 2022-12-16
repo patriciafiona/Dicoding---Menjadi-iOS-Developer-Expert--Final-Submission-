@@ -11,6 +11,7 @@ import Favorite
 import Search
 import Game
 import Genre
+import Developer
 
 struct SplashView: View {
   @State var pushNewView: Bool = false
@@ -18,6 +19,7 @@ struct SplashView: View {
   @EnvironmentObject var genrePresenter: GenrePresenter
   @EnvironmentObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
   @EnvironmentObject var searchPresenter: GetListPresenter<Any, SearchDomainModel, Interactor<Any, [SearchDomainModel], GetSearchRepository<GetSearchRemoteDataSource, SearchTransformer>>>
+  @EnvironmentObject var developerPresenter: GetListPresenter<Any, DeveloperDomainModel, Interactor<Any, [DeveloperDomainModel], GetDevelopersRepository<GetDevelopersLocaleDataSource, GetDevelopersRemoteDataSource, DeveloperTransformer>>>
   
   var body: some View {
     NavigationView{
@@ -26,7 +28,8 @@ struct SplashView: View {
           gamePresenter: gamePresenter,
           genrePresenter: genrePresenter,
           favoritePresenter: favoritePresenter,
-          searchPresenter: searchPresenter
+          searchPresenter: searchPresenter,
+          developerPresenter: developerPresenter
         )
       } label: {
         SplashContent()

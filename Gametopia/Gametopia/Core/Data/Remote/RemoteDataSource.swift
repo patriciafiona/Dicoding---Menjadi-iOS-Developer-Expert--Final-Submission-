@@ -18,7 +18,6 @@ protocol RemoteDataSourceProtocol: AnyObject {
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameResult], Error>
   func getFewDiscoveryGame() -> AnyPublisher<[GameResult], Error>
   func getListGenres() -> AnyPublisher<[GenreResult], Error>
-  func getListDevelopers() -> AnyPublisher<[DeveloperResult], Error>
   func getGameDetails(id: Int) -> AnyPublisher<DetailGameResponse, Error>
   func getGenreDetails(id: Int) -> AnyPublisher<DetailGenreResponse, Error>
 }
@@ -104,27 +103,6 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
         )
         .validate()
         .responseDecodable(of: GenreResponse.self) { response in
-          switch response.result {
-          case .success(let value):
-            completion(.success(value.results!))
-          case .failure:
-            completion(.failure(URLError.invalidResponse))
-          }
-        }
-      }
-    }.eraseToAnyPublisher()
-  }
-  
-  func getListDevelopers() -> AnyPublisher<[DeveloperResult], Error> {
-    return Future<[DeveloperResult], Error> { completion in
-      if let url = URL(string: Endpoints.Gets.developers.url) {
-        AF.request(
-          url,
-          method: .get,
-          parameters: ["key": apiKey]
-        )
-        .validate()
-        .responseDecodable(of: DeveloperResponse.self) { response in
           switch response.result {
           case .success(let value):
             completion(.success(value.results!))

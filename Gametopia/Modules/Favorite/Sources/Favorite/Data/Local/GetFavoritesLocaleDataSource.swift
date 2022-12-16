@@ -66,20 +66,4 @@ public struct GetFavoritesLocaleDataSource: LocaleDataSource {
     fatalError()
   }
   
-  public func list(sortedFromBest: Bool) -> AnyPublisher<[Game.GameModuleEntity], Error> {
-    fatalError()
-  }
-  
-  public func listBestRating() -> AnyPublisher<[Game.GameModuleEntity], Error> {
-    fatalError()
-  }
-  
-  public func add(entity: Game.GameModuleEntity) -> AnyPublisher<Bool, Error> {
-    fatalError()
-  }
-  
-  public func updateGames(entity: Game.GameModuleEntity) -> AnyPublisher<Bool, Error> {
-    fatalError()
-  }
-  
 }

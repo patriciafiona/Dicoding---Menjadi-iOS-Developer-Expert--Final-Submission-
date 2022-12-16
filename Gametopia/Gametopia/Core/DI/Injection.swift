@@ -14,6 +14,7 @@ import Game
 import Favorite
 import Search
 import Genre
+import Developer
 
 final class Injection: NSObject {
   
@@ -72,6 +73,17 @@ final class Injection: NSObject {
       let remote = GetSearchRemoteDataSource(endpoint: Endpoints.Gets.games.url)
       let mapper = SearchTransformer()
       let repository = GetSearchRepository(
+          remoteDataSource: remote,
+          mapper: mapper)
+      return Interactor(repository: repository) as! U
+  }
+  
+  func provideDeveloper<U: UseCase>() -> U where U.Request == Any, U.Response == [DeveloperDomainModel] {
+      let locale = GetDevelopersLocaleDataSource(realm: realm)
+      let remote = GetDevelopersRemoteDataSource(endpoint: Endpoints.Gets.developers.url)
+      let mapper = DeveloperTransformer()
+      let repository = GetDevelopersRepository(
+          localeDataSource: locale,
           remoteDataSource: remote,
           mapper: mapper)
       return Interactor(repository: repository) as! U

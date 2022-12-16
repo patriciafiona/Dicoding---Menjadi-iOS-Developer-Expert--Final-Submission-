@@ -21,7 +21,7 @@ public struct GetGenresRemoteDataSource {
   
   func getListGenres() -> AnyPublisher<[GenreResult], Error> {
     return Future<[GenreResult], Error> { completion in
-      if let url = URL(string: Endpoints.Gets.genres.url) {
+      if let url = URL(string: "https://api.rawg.io/api/genres") {
         AF.request(
           url,
           method: .get,
@@ -42,7 +42,7 @@ public struct GetGenresRemoteDataSource {
   
   func getGenreDetails(id: Int) -> AnyPublisher<DetailGenreResponse, Error> {
     return Future<DetailGenreResponse, Error> { completion in
-      if let url = URL(string: "\(Endpoints.Gets.genres.url)/\(id)") {
+      if let url = URL(string: "https://api.rawg.io/api/genres\(id)") {
         AF.request(
           url,
           method: .get,
@@ -59,32 +59,6 @@ public struct GetGenresRemoteDataSource {
         }
       }
     }.eraseToAnyPublisher()
-  }
-  
-}
-
-struct API {
-  static let baseUrl = "https://api.rawg.io/api/"
-}
-
-protocol Endpoint {
-  var url: String { get }
-}
-
-enum Endpoints {
-  
-  enum Gets: Endpoint {
-    case games
-    case genres
-    case developers
-    
-    public var url: String {
-      switch self {
-      case .games: return "\(API.baseUrl)games"
-      case .genres: return "\(API.baseUrl)genres"
-      case .developers: return "\(API.baseUrl)developers"
-      }
-    }
   }
   
 }

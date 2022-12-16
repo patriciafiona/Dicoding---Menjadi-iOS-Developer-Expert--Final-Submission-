@@ -12,6 +12,7 @@ import Game
 import Favorite
 import Search
 import Genre
+import Developer
 
 @main
 struct GametopiaApp: App {
@@ -24,6 +25,17 @@ struct GametopiaApp: App {
       
       let gameUseCase: GameInteractor = Injection.init().provideGame()
       let gamePresenter = GamePresenter(useCase: gameUseCase)
+      
+      let developerUseCase: Interactor<
+          Any,
+          [DeveloperDomainModel],
+          GetDevelopersRepository<
+              GetDevelopersLocaleDataSource,
+              GetDevelopersRemoteDataSource,
+              DeveloperTransformer
+          >
+        > = Injection.init().provideDeveloper()
+      let developerPresenter = GetListPresenter(useCase: developerUseCase)
       
       let favoriteUseCase: Interactor<
           Any,
@@ -49,6 +61,7 @@ struct GametopiaApp: App {
         .environmentObject(genrePresenter)
         .environmentObject(favoritePresenter)
         .environmentObject(searchPresenter)
+        .environmentObject(developerPresenter)
     }
     .onChange(of: scenePhase) { phase in
       if phase == .background {

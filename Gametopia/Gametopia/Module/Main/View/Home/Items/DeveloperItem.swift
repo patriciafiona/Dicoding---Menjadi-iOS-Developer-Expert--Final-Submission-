@@ -9,9 +9,12 @@ import SwiftUI
 import SkeletonUI
 import Kingfisher
 
+import Core
+import Developer
+
 struct DeveloperItem: View {
-  var developer: DeveloperModel
-  @ObservedObject var presenter: HomePresenter
+  var developer: DeveloperDomainModel
+  @ObservedObject var presenter: GetListPresenter<Any, DeveloperDomainModel, Interactor<Any, [DeveloperDomainModel], GetDevelopersRepository<GetDevelopersLocaleDataSource, GetDevelopersRemoteDataSource, DeveloperTransformer>>>
   
   var body: some View {
     ZStack {
@@ -43,8 +46,8 @@ struct DeveloperItem: View {
 }
 
 private struct DeveloperHeaderOverlay: View{
-  @ObservedObject var presenter: HomePresenter
-  var developer: DeveloperModel
+  @ObservedObject var presenter: GetListPresenter<Any, DeveloperDomainModel, Interactor<Any, [DeveloperDomainModel], GetDevelopersRepository<GetDevelopersLocaleDataSource, GetDevelopersRemoteDataSource, DeveloperTransformer>>>
+  var developer: DeveloperDomainModel
   
   var gradient: LinearGradient {
     .linearGradient(
@@ -69,11 +72,15 @@ private struct DeveloperHeaderOverlay: View{
             .foregroundColor(.yellow)
           LazyVStack{
             ForEach(developer.games.prefix(3), id: \.id){ game in
-              ZStack{
-                self.presenter.linkDetailFromDeveloperBuilder(for: game.id!) {
+              ZStack {
                   DeveloperGameItem(game: game)
-                }.buttonStyle(PlainButtonStyle())
-              }
+              }.buttonStyle(PlainButtonStyle())
+              
+//              ZStack{
+//                self.presenter.linkDetailFromDeveloperBuilder(for: game.id!) {
+//                  DeveloperGameItem(game: game)
+//                }.buttonStyle(PlainButtonStyle())
+//              }
             }
           }
         }
@@ -89,7 +96,7 @@ private struct DeveloperHeaderOverlay: View{
 }
 
 struct DeveloperGameItem: View{
-  var game: GameInDeveloperModel
+  var game: GameInDeveloperDomainModel
   
   var body: some View {
     GeometryReader { geo in

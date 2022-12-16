@@ -10,7 +10,6 @@ import Combine
 
 protocol HomeUseCase {
   func getFewDiscoveryGame() -> AnyPublisher<[DetailGameModel], Error>
-  func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error>
   func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error>
 }
 
@@ -23,10 +22,6 @@ class HomeInteractor: HomeUseCase {
   
   func getFewDiscoveryGame() -> AnyPublisher<[DetailGameModel], Error> {
     return repository.getFewDiscoveryGame()
-  }
-  
-  func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error> {
-    return repository.getListDevelopers()
   }
   
   func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error>{

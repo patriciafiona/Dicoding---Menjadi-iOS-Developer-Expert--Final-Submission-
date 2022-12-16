@@ -10,9 +10,6 @@ import RealmSwift
 import Combine
 
 protocol LocaleDataSourceProtocol: AnyObject {
-  func getDevelopers() -> AnyPublisher<[DeveloperEntity], Error>
-  func addDevelopers(from developers: [DeveloperEntity]) -> AnyPublisher<Bool, Error>
-  
   func getGames() -> AnyPublisher<[GameEntity], Error>
   func getSortedGames(sortedFromBest: Bool) -> AnyPublisher<[GameEntity], Error>
   func getBestRatingGames() -> AnyPublisher<[GameEntity], Error>
@@ -81,50 +78,6 @@ extension LocaleDataSource: LocaleDataSourceProtocol {
             .sorted(byKeyPath: "rating", ascending: !sortedFromBest)
         }()
         completion(.success(detailGames.toArray(ofType: GameEntity.self, limit: 10)))
-      } else {
-        completion(.failure(DatabaseError.invalidInstance))
-      }
-    }.eraseToAnyPublisher()
-  }
-  
-  func getDevelopers() -> AnyPublisher<[DeveloperEntity], Error> {
-    return Future<[DeveloperEntity], Error> { completion in
-      if let realm = self.realm {
-        let developers: Results<DeveloperEntity> = {
-          realm.objects(DeveloperEntity.self)
-            .sorted(byKeyPath: "name", ascending: true)
-        }()
-        completion(.success(developers.toArray(ofType: DeveloperEntity.self)))
-      } else {
-        completion(.failure(DatabaseError.invalidInstance))
-      }
-    }.eraseToAnyPublisher()
-  }
- 
-  func addDevelopers(
-    from developers: [DeveloperEntity]
-  ) -> AnyPublisher<Bool, Error> {
-    return Future<Bool, Error> { completion in
-      if let realm = self.realm {
-        do {
-          try realm.write {
-            for developer in developers {
-              //Should be manual because need to change from game array to game list
-              let temp = DeveloperEntity()
-              temp.id = String(developer.id)
-              temp.name = developer.name
-              temp.slug = developer.slug
-              temp.gameCount = developer.gameCount
-              temp.imageBackground = developer.imageBackground
-              temp.games.append(objectsIn: developer.games)
-              
-              realm.add(temp, update: .all)
-            }
-            completion(.success(true))
-          }
-        } catch {
-          completion(.failure(DatabaseError.requestFailed))
-        }
       } else {
         completion(.failure(DatabaseError.invalidInstance))
       }

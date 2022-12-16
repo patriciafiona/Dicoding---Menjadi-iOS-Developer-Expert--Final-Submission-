@@ -12,7 +12,6 @@ protocol GametopiaRepositoryProtocol {
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameModel], Error>
   func getFewDiscoveryGame() -> AnyPublisher<[DetailGameModel], Error>
   
-  func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error>
   func getGameDetail(id: Int, isAdd: Bool) -> AnyPublisher<DetailGameModel, Error>
   func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error>
   
@@ -91,26 +90,6 @@ extension GametopiaRepository: GametopiaRepositoryProtocol {
         } else {
           return self.locale.getBestRatingGames()
             .map { DetailGameMapper.mapDetailGameEntitiesToDomains(input: $0) }
-            .eraseToAnyPublisher()
-        }
-      }.eraseToAnyPublisher()
-  }
-  
-  func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error> {
-    return self.locale.getDevelopers()
-      .flatMap { result -> AnyPublisher<[DeveloperModel], Error> in
-        if result.isEmpty {
-          return self.remote.getListDevelopers()
-            .map { DeveloperMapper.mapDevelopersResponsesToEntities(input: $0) }
-            .flatMap { self.locale.addDevelopers(from: $0) }
-            .filter { $0 }
-            .flatMap { _ in self.locale.getDevelopers()
-              .map { DeveloperMapper.mapDeveloperEntitiesToDomains(input: $0) }
-            }
-            .eraseToAnyPublisher()
-        } else {
-          return self.locale.getDevelopers()
-            .map { DeveloperMapper.mapDeveloperEntitiesToDomains(input: $0) }
             .eraseToAnyPublisher()
         }
       }.eraseToAnyPublisher()

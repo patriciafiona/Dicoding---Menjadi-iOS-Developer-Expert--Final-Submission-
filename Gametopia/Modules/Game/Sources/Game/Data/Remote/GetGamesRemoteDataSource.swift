@@ -22,7 +22,7 @@ public struct GetGamesRemoteDataSource {
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameResult], Error> {
     let param = ["key": apiKey, "ordering": sortFromBest == true ? orderByRatingDesc: orderByRatingAsc]
     return Future<[GameResult], Error> { completion in
-      if let url = URL(string: Endpoints.Gets.games.url) {
+      if let url = URL(string: "https://api.rawg.io/api/games") {
         AF.request(
           url,
           method: .get,
@@ -43,7 +43,7 @@ public struct GetGamesRemoteDataSource {
   
   func getFewDiscoveryGame() -> AnyPublisher<[GameResult], Error> {
     return Future<[GameResult], Error> { completion in
-      if let url = URL(string: Endpoints.Gets.games.url) {
+      if let url = URL(string: "https://api.rawg.io/api/games") {
         AF.request(
           url,
           method: .get,
@@ -64,7 +64,7 @@ public struct GetGamesRemoteDataSource {
   
   func getGameDetails(id: Int) -> AnyPublisher<DetailGameResponse, Error>{
     return Future<DetailGameResponse, Error> { completion in
-      if let url = URL(string: "\(Endpoints.Gets.games.url)/\(id)") {
+      if let url = URL(string: "https://api.rawg.io/api/games/\(id)") {
         AF.request(
           url,
           method: .get,
@@ -82,30 +82,4 @@ public struct GetGamesRemoteDataSource {
       }
     }.eraseToAnyPublisher()
   }
-}
-
-struct API {
-  static let baseUrl = "https://api.rawg.io/api/"
-}
-
-protocol Endpoint {
-  var url: String { get }
-}
-
-enum Endpoints {
-  
-  enum Gets: Endpoint {
-    case games
-    case genres
-    case developers
-    
-    public var url: String {
-      switch self {
-      case .games: return "\(API.baseUrl)games"
-      case .genres: return "\(API.baseUrl)genres"
-      case .developers: return "\(API.baseUrl)developers"
-      }
-    }
-  }
-  
 }

@@ -12,10 +12,12 @@ import Core
 import Game
 import Favorite
 import Genre
+import Developer
 
 struct HomeTab: View {
   @ObservedObject var genrePresenter: GenrePresenter
   @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  @ObservedObject var developerPresenter: GetListPresenter<Any, DeveloperDomainModel, Interactor<Any, [DeveloperDomainModel], GetDevelopersRepository<GetDevelopersLocaleDataSource, GetDevelopersRemoteDataSource, DeveloperTransformer>>>
   @ObservedObject var gamePresenter: GamePresenter
   @State var game: Game.DetailGameDomainModel?
   
@@ -142,16 +144,16 @@ struct HomeTab: View {
             Group{
               TitleSubtitle(title: "Developers", subtitle: "Find your favorite developer here")
               
-//              ScrollView(.vertical, showsIndicators: false){
-//                LazyVStack{
-//                  ForEach(
-//                    self.presenter.developers,
-//                    id: \.id
-//                  ) { developer in
-//                    DeveloperItem(developer: developer, presenter: presenter)
-//                  }
-//                }
-//              }.frame(maxHeight: 800)
+              ScrollView(.vertical, showsIndicators: false){
+                LazyVStack{
+                  ForEach(
+                    self.developerPresenter.list,
+                    id: \.id
+                  ) { developer in
+                    DeveloperItem(developer: developer, presenter: developerPresenter)
+                  }
+                }
+              }.frame(maxHeight: 800)
             }
             
           }
@@ -168,7 +170,7 @@ struct HomeTab: View {
     }.onAppear {
       self.gamePresenter.getGames()
       self.genrePresenter.getGenres()
-//      self.presenter.getDevelopers()
+      self.developerPresenter.getList(request: nil)
       
       self.gamePresenter.objectWillChange.send()
       
