@@ -8,13 +8,23 @@
 import SwiftUI
 import Kingfisher
 import SkeletonUI
+
+import Core
 import Genre
+import Game
+import Favorite
 
 struct DetailGenreView: View {
   @ObservedObject var presenter: GenrePresenter
+  @ObservedObject var gamePresenter: GamePresenter
+  @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  var genreId: Int
   
-  init(presenter: GenrePresenter) {
+  init(presenter: GenrePresenter, gamePresenter: GamePresenter, genreId: Int, favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>) {
       self.presenter = presenter
+      self.gamePresenter = gamePresenter
+      self.genreId = genreId
+      self.favoritePresenter = favoritePresenter
       
       let navBarAppearance = UINavigationBar.appearance()
       navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
@@ -23,15 +33,19 @@ struct DetailGenreView: View {
   }
   
   var body: some View {
-    RootGenreContent(presenter: presenter)
+    RootGenreContent(gamePresenter: gamePresenter, presenter: presenter, favoritePresenter: favoritePresenter, genreId: genreId)
   }
 }
 
 struct RootGenreContent: View{
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var gamePresenter: GamePresenter
     @ObservedObject var presenter: GenrePresenter
+    @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+    var genreId: Int
     
     var body: some View{
+      let router = DetailGenreRouter(presenter: gamePresenter, favoritePresenter: favoritePresenter)
         NavigationView {
             ScrollView{
                 VStack(alignment: .leading) {
@@ -90,21 +104,16 @@ struct RootGenreContent: View{
                         LazyVStack(alignment: .leading){
                           ForEach(presenter.detailGenre!.games, id: \.id){ game in
                             ZStack{
-                              Text(game.name)
+                              NavigationLink(
+                                destination: router.makeDetailView(for: game.id ?? 0)
+                              ) {
+                                Text(game.name)
                                   .foregroundColor(.white)
                                   .font(.system(size: 16))
                                   .underline()
                                   .padding(.bottom, 10)
-                              }.buttonStyle(PlainButtonStyle())
-//                            ZStack{
-//                              self.presenter.linkBuilder(for: game.id!) {
-//                                Text(game.name)
-//                                    .foregroundColor(.white)
-//                                    .font(.system(size: 16))
-//                                    .underline()
-//                                    .padding(.bottom, 10)
-//                              }.buttonStyle(PlainButtonStyle())
-//                            }
+                                }.buttonStyle(PlainButtonStyle())
+                              }
                           }
                         }
                         .skeleton(with: presenter.detailGenre?.games == nil)
@@ -135,9 +144,8 @@ struct RootGenreContent: View{
         .phoneOnlyStackNavigationView()
         .statusBar(hidden: true)
         .onAppear {
-          if self.presenter.detailGenre == nil {
-            self.presenter.getDetailGenre()
-          }
+          self.presenter.getDetailGenre(id: genreId )
+          self.presenter.objectWillChange.send()
         }
     }
 }

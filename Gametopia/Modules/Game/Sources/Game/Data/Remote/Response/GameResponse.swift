@@ -22,21 +22,21 @@ public struct GameResponse: Decodable {
 public struct GameResult: Decodable {
     let id: Int?
     let name, released: String?
-    let backgroundImage: String?
-    let rating, ratingTop: Double?
-    let suggestionsCount: Int?
+    let background_image: String?
+    let rating, rating_top: Double?
+    let suggestions_count: Int?
     let updated: String?
-    let reviewsCount: Int?
-    let communityRating: Int?
+    let reviews_count: Int?
+    let community_rating: Int?
     let platforms: [Platform]?
     let genres: [Genre]?
-    let parentPlatforms: [ParentPlatformPlatform]?
+    let parent_platforms: [ParentPlatformPlatform]?
 }
 
 // MARK: - Platform
 public struct Platforms: Decodable {
     let platform: Platform?
-    let releasedAt: String?
+    let released_at: String?
 }
 
 // MARK: - Platform
@@ -55,7 +55,7 @@ public struct ParentPlatformPlatform: Decodable {
 public struct Genre: Decodable {
     let id: Int?
     let name, slug: String?
-    let gamesCount: Int?
-    let imageBackground: String?
+    let games_count: Int?
+    let image_background: String?
     let language: String?
 }

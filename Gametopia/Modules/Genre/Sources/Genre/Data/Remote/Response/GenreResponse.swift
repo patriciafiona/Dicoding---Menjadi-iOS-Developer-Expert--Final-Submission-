@@ -19,7 +19,7 @@ public struct GenreResult: Decodable {
     public let id: Int?
     public let name, slug: String?
     public let games_count: Int?
-    public let imageBackground: String?
+    public let image_background: String?
     public let games: [GameInGenre]?
 }
 

@@ -10,18 +10,27 @@ import Kingfisher
 import SkeletonUI
 import Combine
 
+import Core
+import Game
+import Favorite
+
 struct DetailView: View {
-  @ObservedObject var presenter: DetailPresenter
+  @ObservedObject var presenter: GamePresenter
+  @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  
+  @State var gameId: Int
   
   var body: some View {
-    RootContent(presenter: presenter)
+    RootContent(presenter: presenter, favoritePresenter: favoritePresenter, gameId: gameId)
   }
 }
 
 struct RootContent: View{
   @Environment(\.presentationMode) var presentationMode
-  @ObservedObject var presenter: DetailPresenter
+  @ObservedObject var presenter: GamePresenter
+  @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
   @State private var isFavorite: Bool = false
+  @State var gameId: Int
   
   var body: some View{
     NavigationView {
@@ -48,7 +57,7 @@ struct RootContent: View{
       })
       .navigationBarItems(trailing: Button {
         isFavorite = !isFavorite
-        presenter.updateFavoriteGame(id: (presenter.detailGame?.id)!, isFavorite: isFavorite )
+        favoritePresenter.updateFavorite(request: nil, id: (presenter.detailGame?.id)!, isFavorite: isFavorite )
       } label: {
         Image(systemName: isFavorite == true ? "heart.circle.fill" : "heart.circle")
           .foregroundColor(isFavorite == true ?.red : .gray)
@@ -62,9 +71,8 @@ struct RootContent: View{
     .phoneOnlyStackNavigationView()
     .statusBar(hidden: true)
     .onAppear {
-      if self.presenter.detailGame == nil {
-        self.presenter.getDetailGame()
-      }
+      self.presenter.getDetailGame(id: gameId)
+      self.presenter.objectWillChange.send()
     }
     .onReceive(Just(presenter.detailGame?.isFavorite), perform: { value in
       self.isFavorite =  presenter.detailGame?.isFavorite ?? false
@@ -73,7 +81,7 @@ struct RootContent: View{
 }
 
 struct TopSection: View {
-  @ObservedObject var presenter: DetailPresenter
+  @ObservedObject var presenter: GamePresenter
   
   var body: some View {
     ZStack{
@@ -110,7 +118,7 @@ struct TopSection: View {
 }
 
 struct BottomSection: View {
-  @ObservedObject var presenter: DetailPresenter
+  @ObservedObject var presenter: GamePresenter
   
   var body: some View {
     VStack(alignment: .leading){
@@ -251,7 +259,7 @@ struct BottomSection: View {
 }
 
 struct HeaderOverlay: View{
-  var game: DetailGameModel?
+  var game: Game.DetailGameDomainModel?
   
   var gradient: LinearGradient {
     .linearGradient(

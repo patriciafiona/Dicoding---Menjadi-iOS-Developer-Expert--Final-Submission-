@@ -9,26 +9,26 @@ import Foundation
 
 public struct DetailGameResponse: Decodable {
   let id: Int?
-  let slug, name, nameOriginal, description: String?
+  let slug, name, name_original, description: String?
   let released: String?
   let updated: String?
-  let backgroundImage: String?
-  let backgroundImageAdditional: String?
+  let background_image: String?
+  let background_image_additional: String?
   let website: String?
   let rating: Double?
   let added: Int?
   let playtime: Int?
-  let achievementsCount: Int?
-  let ratingsCount, suggestionsCount: Int?
-  let reviewsCount: Int?
-  let parentPlatforms: [PlatformInDetail]?
+  let achievements_count: Int?
+  let ratings_count, suggestions_count: Int?
+  let reviews_count: Int?
+  let parent_platforms: [PlatformInDetail]?
   let platforms: [DetailPlatform]?
   let stores: [StoreDetails]?
   let developers: [Developer]?
   let genres: [GenreInDetails]?
   let tags: [Tag]?
   let publishers: [Publisher]?
-  let descriptionRaw: String?
+  let description_raw: String?
 }
 
 public struct PlatformInDetail: Decodable {
@@ -42,7 +42,7 @@ public struct PlatformDetail: Decodable {
 
 public struct DetailPlatform: Decodable{
     let platform: PlatformDetails?
-    let releasedAt: String?
+    let released_at: String?
     let requirements: PlatformRequirement?
 }
 
@@ -50,9 +50,9 @@ public struct PlatformDetails: Decodable{
     let id: Int?
     let name, slug: String?
     let image: String?
-    let yearEnd, yearStart: Int?
-    let gamesCount: Int?
-    let imageBackground: String?
+    let year_end, year_start: Int?
+    let games_count: Int?
+    let image_background: String?
 }
 
 public struct PlatformRequirement: Decodable{
@@ -68,35 +68,35 @@ public struct StoreDetails: Decodable{
 public struct Store: Decodable{
     let id: Int?
     let name, slug: String?
-    let gamesCount: Int?
+    let games_count: Int?
     let domain: String?
-    let imageBackground: String?
+    let image_background: String?
 }
 
 public struct Developer: Decodable{
     let id: Int?
     let name, slug: String?
-    let gamesCount: Int?
-    let imageBackground: String?
+    let games_count: Int?
+    let image_background: String?
 }
 
 public struct Publisher: Decodable{
     let id: Int?
     let name, slug: String?
-    let gamesCount: Int?
-    let imageBackground: String?
+    let games_count: Int?
+    let image_background: String?
 }
 
 public struct GenreInDetails: Decodable{
     let id: Int?
     let name, slug: String?
-    let gamesCount: Int?
-    let imageBackground: String?
+    let games_count: Int?
+    let image_background: String?
 }
 
 public struct Tag: Decodable{
     let id: Int?
     let name, slug: String?
-    let gamesCount: Int?
-    let imageBackground: String?
+    let games_count: Int?
+    let image_background: String?
 }

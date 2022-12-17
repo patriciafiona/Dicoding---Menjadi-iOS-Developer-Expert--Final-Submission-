@@ -20,5 +20,5 @@ public struct SearchResult: Decodable{
     var released: String?
     var rating: Double?
     var score: String?
-    var backgroundImage: String?
+    var background_image: String?
 }

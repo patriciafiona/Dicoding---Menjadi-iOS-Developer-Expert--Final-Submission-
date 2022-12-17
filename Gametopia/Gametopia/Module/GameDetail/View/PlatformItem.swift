@@ -7,10 +7,11 @@
 
 import SwiftUI
 import Kingfisher
+import Game
 
 struct PlatformItem: View {
     var released_at: String?
-    var platform: PlatformDetailsModel?
+    var platform: PlatformDetailsDomainModel?
     @State private var platformImage: String = "gametopia_text_logo"
     
     var body: some View {

@@ -23,8 +23,8 @@ public struct DeveloperTransformer: Mapper {
         newDeveloper.id = String(result.id ?? 0)
         newDeveloper.name = result.name ?? "Unknown Name"
         newDeveloper.slug = result.slug ?? "Unknown Slug"
-        newDeveloper.gameCount = result.gamesCount ?? 0
-        newDeveloper.imageBackground = result.imageBackground ?? ""
+        newDeveloper.gameCount = result.games_count ?? 0
+        newDeveloper.imageBackground = result.image_background ?? ""
         
         let temp = List<GameInDeveloperEntity>()
         for game in result.games! {
@@ -67,8 +67,8 @@ public struct DeveloperTransformer: Mapper {
           id: result.id ?? 0,
           name: result.name ?? "Unknown Name",
           slug: result.slug ?? "Unknown Slug",
-          gamesCount: result.gamesCount ?? 0,
-          imageBackground: result.imageBackground ?? "",
+          gamesCount: result.games_count ?? 0,
+          imageBackground: result.image_background ?? "",
           games: (result.games!) as? [GameInDeveloperDomainModel] ?? []
         )
       }

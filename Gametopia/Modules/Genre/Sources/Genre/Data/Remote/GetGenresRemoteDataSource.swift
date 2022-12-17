@@ -42,7 +42,7 @@ public struct GetGenresRemoteDataSource {
   
   func getGenreDetails(id: Int) -> AnyPublisher<DetailGenreResponse, Error> {
     return Future<DetailGenreResponse, Error> { completion in
-      if let url = URL(string: "https://api.rawg.io/api/genres\(id)") {
+      if let url = URL(string: "https://api.rawg.io/api/genres/\(id)") {
         AF.request(
           url,
           method: .get,

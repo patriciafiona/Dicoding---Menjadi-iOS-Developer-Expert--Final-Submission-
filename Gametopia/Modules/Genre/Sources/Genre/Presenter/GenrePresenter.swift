@@ -41,9 +41,9 @@ public class GenrePresenter: ObservableObject {
       .store(in: &cancellables)
   }
   
-  public func getDetailGenre() {
+  public func getDetailGenre(id: Int) {
     loadingState = true
-    useCase.getDetailGenre()
+    useCase.getDetailGenre(id: id)
       .receive(on: RunLoop.main)
       .sink(receiveCompletion: { completion in
         switch completion {

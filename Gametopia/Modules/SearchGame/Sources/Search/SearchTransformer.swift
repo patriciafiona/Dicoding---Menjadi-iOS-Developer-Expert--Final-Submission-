@@ -25,7 +25,7 @@ public struct SearchTransformer: Mapper {
         released: result.released ?? "Unknown released",
         rating: result.rating ?? 0.0,
         score: result.score ?? "Unknown score",
-        backgroundImage: result.backgroundImage ?? ""
+        backgroundImage: result.background_image ?? ""
       )
     }
   }

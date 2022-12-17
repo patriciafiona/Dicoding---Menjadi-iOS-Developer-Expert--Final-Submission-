@@ -20,7 +20,7 @@ public final class GenreTransformer {
       newGenre.name = result.name ?? "Unknown Name"
       newGenre.slug = result.slug ?? "Unknown Slug"
       newGenre.gameCount = result.games_count ?? 0
-      newGenre.imageBackground = result.imageBackground ?? ""
+      newGenre.imageBackground = result.image_background ?? ""
       let temp = List<GameInGenreEntity>()
       for game in result.games! {
         let gameTemp = GameInGenreEntity()
@@ -46,8 +46,8 @@ public final class GenreTransformer {
     newGenre.id = result.id ?? 0
     newGenre.name = result.name ?? "Unknown Name"
     newGenre.slug = result.slug ?? "Unknown Slug"
-    newGenre.gameCount = result.gamesCount ?? 0
-    newGenre.imageBackground = result.imageBackground ?? ""
+    newGenre.gameCount = result.games_count ?? 0
+    newGenre.imageBackground = result.image_background ?? ""
     newGenre.desc = result.description ?? ""
     return newGenre
   }
@@ -105,7 +105,7 @@ public final class GenreTransformer {
         name: result.name ?? "Unknown Name",
         slug: result.slug ?? "Unknown Slug",
         gamesCount: result.games_count ?? 0,
-        imageBackground: result.imageBackground ?? "",
+        imageBackground: result.image_background ?? "",
         games: (result.games!) as? [GameInGenreModel] ?? []
       )
     }

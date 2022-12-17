@@ -22,6 +22,8 @@ struct HomeTab: View {
   @State var game: Game.DetailGameDomainModel?
   
   var body: some View {
+    let router = HomeRouter(gamePresenter: gamePresenter, favoritePresenter: favoritePresenter, genrePresenter: genrePresenter)
+    
     ZStack {
       if gamePresenter.discoveryLoadingState {
         ZStack{
@@ -73,16 +75,14 @@ struct HomeTab: View {
                 TitleSubtitle(title: "Discovery", subtitle: "Based on best rating")
                 Spacer()
                 
-                Image(
-                  systemName: "arrow.right.circle"
-                )
-                .tint(Color.yellow)
-//                self.presenter.discoveryLinkBuilder() {
-//                  Image(
-//                    systemName: "arrow.right.circle"
-//                  )
-//                  .tint(Color.yellow)
-//                }.buttonStyle(PlainButtonStyle())
+                NavigationLink(
+                  destination: router.makeDiscoverByRatingView()
+                ) {
+                  Image(
+                    systemName: "arrow.right.circle"
+                  )
+                  .tint(Color.yellow)
+                }.buttonStyle(PlainButtonStyle())
               }
               
               ScrollView(.horizontal, showsIndicators: false){
@@ -107,22 +107,16 @@ struct HomeTab: View {
                       id: \.id
                     ) { game in
                       ZStack {
-                        GameItem(
-                          favoritePresenter: favoritePresenter,
-                          gamePresenter: gamePresenter,
-                          game: game
-                        )
-                       }.buttonStyle(PlainButtonStyle())
-                      
-//                      ZStack {
-//                        self.presenter.linkBuilder(for: game.id!) {
-//                          GameItem(
-//                            favoritePresenter: favoritePresenter,
-//                            presenter: gamePresenter,
-//                            game: game
-//                          )
-//                        }.buttonStyle(PlainButtonStyle())
-//                      }.padding(8)
+                        NavigationLink(
+                          destination: router.makeDetailView(for: game.id ?? 0)
+                        ) {
+                          GameItem(
+                            favoritePresenter: favoritePresenter,
+                            gamePresenter: gamePresenter,
+                            game: game
+                          )
+                        }.buttonStyle(PlainButtonStyle())
+                       }.padding(8)
                     }
                   }
                 }
@@ -134,7 +128,7 @@ struct HomeTab: View {
             //Genre section
             Group{
               TitleSubtitle(title: "Genres", subtitle: "Find your game genre here")
-              GenreGridView(presenter: self.genrePresenter)
+              GenreGridView(presenter: self.genrePresenter, router: router)
             }
             
             
@@ -173,6 +167,8 @@ struct HomeTab: View {
       self.developerPresenter.getList(request: nil)
       
       self.gamePresenter.objectWillChange.send()
+      self.genrePresenter.objectWillChange.send()
+      self.developerPresenter.objectWillChange.send()
       
       //tab bar appearance
       let tabBarAppearance = UITabBarAppearance()
@@ -241,6 +237,8 @@ struct HomeCarouselContent: View {
 
 struct GenreGridView: View{
   @State var presenter: GenrePresenter
+  var router: HomeRouter
+  
   var body: some View {
     let columns = [
         GridItem(.flexible()),
@@ -250,14 +248,13 @@ struct GenreGridView: View{
         LazyVGrid(columns: columns, spacing: 10) {
             ForEach(presenter.genres, id: \.id) { genre in
               ZStack {
+                NavigationLink(
+                  destination: router.makeDetailGenreView(for: genre.id ?? 0 )
+                ) {
                   GenreItem(genre: genre)
+                }
                }.buttonStyle(PlainButtonStyle())
               
-//              ZStack{
-//                self.presenter.genreLinkBuilder(for: genre.id!) {
-//                  GenreItem(genre: genre)
-//                }.buttonStyle(PlainButtonStyle())
-//              }
             }
         }
         .padding(.horizontal)

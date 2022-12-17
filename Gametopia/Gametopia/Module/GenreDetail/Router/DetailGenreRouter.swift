@@ -2,16 +2,27 @@
 //  DetailGenreRouter.swift
 //  Gametopia
 //
-//  Created by Patricia Fiona on 26/11/22.
+//  Created by Patricia Fiona on 17/12/22.
 //
 
+import Foundation
 import SwiftUI
 
+import Core
+import Game
+import Favorite
+
 class DetailGenreRouter {
+  @ObservedObject var presenter: GamePresenter
+  @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  
+  init(presenter: GamePresenter, favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>) {
+    self.presenter = presenter
+    self.favoritePresenter = favoritePresenter
+  }
 
   func makeDetailView(for id: Int) -> some View {
-    let detailUseCase = Injection.init().provideDetail(id: id, isAdd: true)
-    let presenter = DetailPresenter(detailUseCase: detailUseCase)
-    return DetailView(presenter: presenter)
+    let detailUseCase = Injection.init().provideDetail(isAdd: true)
+    return DetailView(presenter: presenter, favoritePresenter: favoritePresenter, gameId: id)
   }
 }

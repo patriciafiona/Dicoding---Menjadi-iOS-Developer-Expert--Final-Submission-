@@ -2,30 +2,43 @@
 //  HomeRouter.swift
 //  Gametopia
 //
-//  Created by Patricia Fiona on 19/11/22.
+//  Created by Patricia Fiona on 16/12/22.
 //
 
 import Foundation
 import SwiftUI
 
-class HomeRouter {
+import Core
+import Game
+import Favorite
+import Genre
 
-  func makeDetailView(for id: Int) -> some View {
-    let detailUseCase = Injection.init().provideDetail(id: id)
-    let presenter = DetailPresenter(detailUseCase: detailUseCase)
-    return DetailView(presenter: presenter)
+public class HomeRouter {
+  @ObservedObject var gamePresenter: GamePresenter
+  @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  @ObservedObject var genrePresenter: GenrePresenter
+  
+  init(gamePresenter: GamePresenter, favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>, genrePresenter: GenrePresenter) {
+    self.gamePresenter = gamePresenter
+    self.favoritePresenter = favoritePresenter
+    self.genrePresenter = genrePresenter
   }
   
-  func makeDetailGameFromDeveloperView(for id: Int) -> some View {
-    let detailUseCase = Injection.init().provideDetail(id: id, isAdd: true)
-    let presenter = DetailPresenter(detailUseCase: detailUseCase)
-    return DetailView(presenter: presenter)
+  func makeDetailView(for id: Int) -> some View {
+    return DetailView(presenter: gamePresenter, favoritePresenter: favoritePresenter, gameId: id)
   }
   
   func makeDiscoverByRatingView() -> some View {
-    let discoverUseCase = Injection.init().provideDiscoveryByRating()
-    let presenter = DiscoveryByRatingPresenter(discoveryByRatingUseCase: discoverUseCase)
-    return DiscoveryByRatingView(presenter: presenter)
+    return DiscoveryByRatingView(presenter: gamePresenter, favoritePresenter: favoritePresenter)
+  }
+  
+  func makeDetailGenreView(for id: Int) -> some View {
+    return DetailGenreView(
+      presenter: genrePresenter,
+      gamePresenter: gamePresenter,
+      genreId: id,
+      favoritePresenter: favoritePresenter
+    )
   }
   
 }

@@ -19,27 +19,27 @@ final class DetailGameTransformer {
     newDetailGame.id = result.id ?? 0
     newDetailGame.isFavorite = false //default for first store
     newDetailGame.name = result.name ?? "Unknown Name"
-    newDetailGame.nameOriginal = result.nameOriginal ?? "Unknown Original Name"
+    newDetailGame.nameOriginal = result.name_original ?? "Unknown Original Name"
     newDetailGame.slug = result.slug ?? "Unknown Slug"
     newDetailGame.desc = result.description ?? "No description"
     newDetailGame.released = result.released ?? "Unknown released"
     newDetailGame.updated = result.updated ?? "Unknown updated"
-    newDetailGame.backgroundImage = result.backgroundImage ?? ""
-    newDetailGame.backgroundImageAdditional = result.backgroundImageAdditional ?? ""
+    newDetailGame.backgroundImage = result.background_image ?? ""
+    newDetailGame.backgroundImageAdditional = result.background_image_additional ?? ""
     newDetailGame.website = result.website ?? ""
     newDetailGame.rating = result.rating ?? 0.0
     newDetailGame.added = result.added ?? 0
     newDetailGame.playtime = result.playtime ?? 0
-    newDetailGame.achievementsCount = result.achievementsCount ?? 0
-    newDetailGame.ratingsCount = result.ratingsCount ?? 0
-    newDetailGame.suggestionsCount = result.suggestionsCount ?? 0
-    newDetailGame.reviewsCount = result.reviewsCount ?? 0
-    newDetailGame.descriptionRaw = result.descriptionRaw ?? ""
+    newDetailGame.achievementsCount = result.achievements_count ?? 0
+    newDetailGame.ratingsCount = result.ratings_count ?? 0
+    newDetailGame.suggestionsCount = result.suggestions_count ?? 0
+    newDetailGame.reviewsCount = result.reviews_count ?? 0
+    newDetailGame.descriptionRaw = result.description_raw ?? ""
     
     //parent platforms
     let temp = List<PlatformModuleEntity>()
-    if(result.parentPlatforms != nil){
-      for platform in result.parentPlatforms! {
+    if(result.parent_platforms != nil){
+      for platform in result.parent_platforms! {
         let platformTemp = PlatformModuleEntity()
         platformTemp.id = UUID()
         platformTemp.slug = platform.platform.slug ?? "Unknown Slug"
@@ -62,11 +62,11 @@ final class DetailGameTransformer {
       platformDetailTemp.id = UUID()
       platformDetailTemp.name = platform.platform?.name ?? "Unknown name"
       platformDetailTemp.slug = platform.platform?.slug ?? "Unknown slug"
-      platformDetailTemp.gamesCount = platform.platform?.gamesCount ?? 0
+      platformDetailTemp.gamesCount = platform.platform?.games_count ?? 0
       platformDetailTemp.image = platform.platform?.image ?? ""
-      platformDetailTemp.imageBackground = platform.platform?.imageBackground ?? ""
-      platformDetailTemp.yearEnd = platform.platform?.yearEnd ?? 0
-      platformDetailTemp.yearStart = platform.platform?.yearStart ?? 0
+      platformDetailTemp.imageBackground = platform.platform?.image_background ?? ""
+      platformDetailTemp.yearEnd = platform.platform?.year_end ?? 0
+      platformDetailTemp.yearStart = platform.platform?.year_start ?? 0
       
       //Platform requirement
       let platfromRequrementTemp = PlatformRequirementModuleEntity()
@@ -74,7 +74,7 @@ final class DetailGameTransformer {
       
       //add to DetailPlatformEntity
       platformTemp.platform = platformDetailTemp
-      platformTemp.releasedAt = platform.releasedAt ?? "Unknown release"
+      platformTemp.releasedAt = platform.released_at ?? "Unknown release"
       platformTemp.requirements = platfromRequrementTemp
       
       temp01.append(
@@ -92,9 +92,9 @@ final class DetailGameTransformer {
       storeEntity.id = UUID()
       storeEntity.name = store.store?.name ?? "Unknown name"
       storeEntity.slug = store.store?.slug ?? "Unknown slug"
-      storeEntity.gamesCount = store.store?.gamesCount ?? 0
+      storeEntity.gamesCount = store.store?.games_count ?? 0
       storeEntity.domain = store.store?.domain ?? "Unknown domain"
-      storeEntity.imageBackground = store.store?.imageBackground ?? ""
+      storeEntity.imageBackground = store.store?.image_background ?? ""
       
       storeTemp.id =  UUID()
       storeTemp.url = store.url ?? ""
@@ -112,8 +112,8 @@ final class DetailGameTransformer {
       developerInDetailsEntity.id = UUID()
       developerInDetailsEntity.name = developer.name ?? "Unknown name"
       developerInDetailsEntity.slug = developer.slug ?? "Unknown slug"
-      developerInDetailsEntity.gamesCount = developer.gamesCount ?? 0
-      developerInDetailsEntity.imageBackground = developer.imageBackground ?? ""
+      developerInDetailsEntity.gamesCount = developer.games_count ?? 0
+      developerInDetailsEntity.imageBackground = developer.image_background ?? ""
       
       temp03.append(developerInDetailsEntity)
     }
@@ -127,8 +127,8 @@ final class DetailGameTransformer {
       genreInDetailsEntity.id = UUID()
       genreInDetailsEntity.name = genre.name ?? "Unknown name"
       genreInDetailsEntity.slug = genre.slug ?? "Unknown slug"
-      genreInDetailsEntity.gamesCount = genre.gamesCount ?? 0
-      genreInDetailsEntity.imageBackground = genre.imageBackground ?? ""
+      genreInDetailsEntity.gamesCount = genre.games_count ?? 0
+      genreInDetailsEntity.imageBackground = genre.image_background ?? ""
       
       temp04.append(genreInDetailsEntity)
     }
@@ -142,8 +142,8 @@ final class DetailGameTransformer {
       tagEntity.id = UUID()
       tagEntity.name = tag.name ?? "Unknown name"
       tagEntity.slug = tag.slug ?? "Unknown slug"
-      tagEntity.gamesCount = tag.gamesCount ?? 0
-      tagEntity.imageBackground = tag.imageBackground ?? ""
+      tagEntity.gamesCount = tag.games_count ?? 0
+      tagEntity.imageBackground = tag.image_background ?? ""
       
       temp05.append(tagEntity)
     }
@@ -157,8 +157,8 @@ final class DetailGameTransformer {
       publisherEntity.id =  UUID()
       publisherEntity.name = publisher.name ?? "Unknown name"
       publisherEntity.slug = publisher.slug ?? "Unknown slug"
-      publisherEntity.gamesCount = publisher.gamesCount ?? 0
-      publisherEntity.imageBackground = publisher.imageBackground ?? ""
+      publisherEntity.gamesCount = publisher.games_count ?? 0
+      publisherEntity.imageBackground = publisher.image_background ?? ""
       
       temp06.append(publisherEntity)
     }
@@ -177,26 +177,26 @@ final class DetailGameTransformer {
       newDetailGame.id = result.id ?? 0
       newDetailGame.isFavorite = false //default for first store
       newDetailGame.name = result.name ?? "Unknown Name"
-      newDetailGame.nameOriginal = result.nameOriginal ?? "Unknown Original Name"
+      newDetailGame.nameOriginal = result.name_original ?? "Unknown Original Name"
       newDetailGame.slug = result.slug ?? "Unknown Slug"
       newDetailGame.desc = result.description ?? "No description"
       newDetailGame.released = result.released ?? "Unknown released"
       newDetailGame.updated = result.updated ?? "Unknown updated"
-      newDetailGame.backgroundImage = result.backgroundImage ?? ""
-      newDetailGame.backgroundImageAdditional = result.backgroundImageAdditional ?? ""
+      newDetailGame.backgroundImage = result.background_image ?? ""
+      newDetailGame.backgroundImageAdditional = result.background_image_additional ?? ""
       newDetailGame.website = result.website ?? ""
       newDetailGame.rating = result.rating ?? 0.0
       newDetailGame.added = result.added ?? 0
       newDetailGame.playtime = result.playtime ?? 0
-      newDetailGame.achievementsCount = result.achievementsCount ?? 0
-      newDetailGame.ratingsCount = result.ratingsCount ?? 0
-      newDetailGame.suggestionsCount = result.suggestionsCount ?? 0
-      newDetailGame.reviewsCount = result.reviewsCount ?? 0
-      newDetailGame.descriptionRaw = result.descriptionRaw ?? ""
+      newDetailGame.achievementsCount = result.achievements_count ?? 0
+      newDetailGame.ratingsCount = result.ratings_count ?? 0
+      newDetailGame.suggestionsCount = result.suggestions_count ?? 0
+      newDetailGame.reviewsCount = result.reviews_count ?? 0
+      newDetailGame.descriptionRaw = result.description_raw ?? ""
       
       //parent platforms
       let temp = List<PlatformModuleEntity>()
-      for platform in result.parentPlatforms! {
+      for platform in result.parent_platforms! {
         let platformTemp = PlatformModuleEntity()
         platformTemp.id = UUID()
         platformTemp.slug = platform.platform.slug ?? "Unknown Slug"
@@ -218,11 +218,11 @@ final class DetailGameTransformer {
         platformDetailTemp.id = UUID()
         platformDetailTemp.name = platform.platform?.name ?? "Unknown name"
         platformDetailTemp.slug = platform.platform?.slug ?? "Unknown slug"
-        platformDetailTemp.gamesCount = platform.platform?.gamesCount ?? 0
+        platformDetailTemp.gamesCount = platform.platform?.games_count ?? 0
         platformDetailTemp.image = platform.platform?.image ?? ""
-        platformDetailTemp.imageBackground = platform.platform?.imageBackground ?? ""
-        platformDetailTemp.yearEnd = platform.platform?.yearEnd ?? 0
-        platformDetailTemp.yearStart = platform.platform?.yearStart ?? 0
+        platformDetailTemp.imageBackground = platform.platform?.image_background ?? ""
+        platformDetailTemp.yearEnd = platform.platform?.year_end ?? 0
+        platformDetailTemp.yearStart = platform.platform?.year_start ?? 0
         
         //Platform requirement
         let platfromRequrementTemp = PlatformRequirementModuleEntity()
@@ -230,7 +230,7 @@ final class DetailGameTransformer {
         
         //add to DetailPlatformEntity
         platformTemp.platform = platformDetailTemp
-        platformTemp.releasedAt = platform.releasedAt ?? "Unknown release"
+        platformTemp.releasedAt = platform.released_at ?? "Unknown release"
         platformTemp.requirements = platfromRequrementTemp
         
         temp01.append(
@@ -248,9 +248,9 @@ final class DetailGameTransformer {
         storeEntity.id = UUID()
         storeEntity.name = store.store?.name ?? "Unknown name"
         storeEntity.slug = store.store?.slug ?? "Unknown slug"
-        storeEntity.gamesCount = store.store?.gamesCount ?? 0
+        storeEntity.gamesCount = store.store?.games_count ?? 0
         storeEntity.domain = store.store?.domain ?? "Unknown domain"
-        storeEntity.imageBackground = store.store?.imageBackground ?? ""
+        storeEntity.imageBackground = store.store?.image_background ?? ""
         
         storeTemp.id = UUID()
         storeTemp.url = store.url ?? ""
@@ -268,8 +268,8 @@ final class DetailGameTransformer {
         developerInDetailsEntity.id = UUID()
         developerInDetailsEntity.name = developer.name ?? "Unknown name"
         developerInDetailsEntity.slug = developer.slug ?? "Unknown slug"
-        developerInDetailsEntity.gamesCount = developer.gamesCount ?? 0
-        developerInDetailsEntity.imageBackground = developer.imageBackground ?? ""
+        developerInDetailsEntity.gamesCount = developer.games_count ?? 0
+        developerInDetailsEntity.imageBackground = developer.image_background ?? ""
         
         temp03.append(developerInDetailsEntity)
       }
@@ -283,8 +283,8 @@ final class DetailGameTransformer {
         genreInDetailsEntity.id = UUID()
         genreInDetailsEntity.name = genre.name ?? "Unknown name"
         genreInDetailsEntity.slug = genre.slug ?? "Unknown slug"
-        genreInDetailsEntity.gamesCount = genre.gamesCount ?? 0
-        genreInDetailsEntity.imageBackground = genre.imageBackground ?? ""
+        genreInDetailsEntity.gamesCount = genre.games_count ?? 0
+        genreInDetailsEntity.imageBackground = genre.image_background ?? ""
         
         temp04.append(genreInDetailsEntity)
       }
@@ -298,8 +298,8 @@ final class DetailGameTransformer {
         tagEntity.id = UUID()
         tagEntity.name = tag.name ?? "Unknown name"
         tagEntity.slug = tag.slug ?? "Unknown slug"
-        tagEntity.gamesCount = tag.gamesCount ?? 0
-        tagEntity.imageBackground = tag.imageBackground ?? ""
+        tagEntity.gamesCount = tag.games_count ?? 0
+        tagEntity.imageBackground = tag.image_background ?? ""
         
         temp05.append(tagEntity)
       }
@@ -313,8 +313,8 @@ final class DetailGameTransformer {
         publisherEntity.id = UUID()
         publisherEntity.name = publisher.name ?? "Unknown name"
         publisherEntity.slug = publisher.slug ?? "Unknown slug"
-        publisherEntity.gamesCount = publisher.gamesCount ?? 0
-        publisherEntity.imageBackground = publisher.imageBackground ?? ""
+        publisherEntity.gamesCount = publisher.games_count ?? 0
+        publisherEntity.imageBackground = publisher.image_background ?? ""
         
         temp06.append(publisherEntity)
       }
@@ -335,10 +335,10 @@ final class DetailGameTransformer {
       newDetailGame.isFavorite = false //default for first store
       newDetailGame.name = result.name ?? "Unknown Name"
       newDetailGame.released = result.released ?? "Unknown released"
-      newDetailGame.backgroundImage = result.backgroundImage ?? ""
+      newDetailGame.backgroundImage = result.background_image ?? ""
       newDetailGame.rating = result.rating ?? 0.0
-      newDetailGame.suggestionsCount = result.suggestionsCount ?? 0
-      newDetailGame.reviewsCount = result.reviewsCount ?? 0
+      newDetailGame.suggestionsCount = result.suggestions_count ?? 0
+      newDetailGame.reviewsCount = result.reviews_count ?? 0
       newDetailGame.updated = result.updated ?? "Unknown updated"
       
       return newDetailGame
@@ -669,8 +669,8 @@ final class DetailGameTransformer {
   ) -> DetailGameDomainModel {
     
     var listParentPlatform:[PlatformModel] = [PlatformModel]()
-    if detailGameResponses.parentPlatforms != nil {
-      for parentPlatform in (detailGameResponses.parentPlatforms)! {
+    if detailGameResponses.parent_platforms != nil {
+      for parentPlatform in (detailGameResponses.parent_platforms)! {
         listParentPlatform.append(
           PlatformModel(
             id: UUID(),
@@ -689,10 +689,10 @@ final class DetailGameTransformer {
           name: platform.platform?.name ?? "Unknown Name",
           slug: platform.platform?.slug ?? "Unknown Slug",
           image: platform.platform?.image ?? "",
-          yearEnd: platform.platform?.yearEnd ?? 0,
-          yearStart: platform.platform?.yearStart ?? 0,
-          gamesCount: platform.platform?.gamesCount ?? 0,
-          imageBackground: platform.platform?.imageBackground ?? ""
+          yearEnd: platform.platform?.year_end ?? 0,
+          yearStart: platform.platform?.year_start ?? 0,
+          gamesCount: platform.platform?.games_count ?? 0,
+          imageBackground: platform.platform?.image_background ?? ""
         )
         
         let requirement = PlatformRequirementDomainModel(
@@ -704,7 +704,7 @@ final class DetailGameTransformer {
           DetailPlatformDomainModel(
             id: UUID(),
             platform: detail,
-            releasedAt: platform.releasedAt ?? "",
+            releasedAt: platform.released_at ?? "",
             requirements: requirement
           )
         )
@@ -722,9 +722,9 @@ final class DetailGameTransformer {
               id: UUID(),
               name: store.store?.name,
               slug: store.store?.slug,
-              gamesCount: store.store?.gamesCount,
+              gamesCount: store.store?.games_count,
               domain: store.store?.domain,
-              imageBackground: store.store?.imageBackground
+              imageBackground: store.store?.image_background
             )
           )
         )
@@ -739,8 +739,8 @@ final class DetailGameTransformer {
             id: UUID(),
             name: developer.name,
             slug: developer.slug,
-            gamesCount: developer.gamesCount,
-            imageBackground: developer.imageBackground
+            gamesCount: developer.games_count,
+            imageBackground: developer.image_background
           )
         )
       }
@@ -754,8 +754,8 @@ final class DetailGameTransformer {
             id: UUID(),
             name: genre.name,
             slug: genre.slug,
-            gamesCount: genre.gamesCount,
-            imageBackground: genre.imageBackground
+            gamesCount: genre.games_count,
+            imageBackground: genre.image_background
           )
         )
       }
@@ -769,8 +769,8 @@ final class DetailGameTransformer {
             id: UUID(),
             name: tag.name,
             slug: tag.slug,
-            gamesCount: tag.gamesCount,
-            imageBackground: tag.imageBackground
+            gamesCount: tag.games_count,
+            imageBackground: tag.image_background
           )
         )
       }
@@ -784,8 +784,8 @@ final class DetailGameTransformer {
             id: UUID(),
             name: publisher.name,
             slug: publisher.slug,
-            gamesCount: publisher.gamesCount,
-            imageBackground: publisher.imageBackground
+            gamesCount: publisher.games_count,
+            imageBackground: publisher.image_background
           )
         )
       }
@@ -796,20 +796,20 @@ final class DetailGameTransformer {
       isFavorite: false, //default
       slug: detailGameResponses.slug ?? "Unknown slug",
       name: detailGameResponses.name ?? "Unknown Name",
-      nameOriginal: detailGameResponses.nameOriginal ?? "Unknown Original Name",
+      nameOriginal: detailGameResponses.name_original ?? "Unknown Original Name",
       description: detailGameResponses.description ?? "No description",
       released: detailGameResponses.released ?? "Unknown released",
       updated: detailGameResponses.updated ?? "Unknown last updates",
-      backgroundImage: detailGameResponses.backgroundImage ?? "",
-      backgroundImageAdditional: detailGameResponses.backgroundImageAdditional ?? "",
+      backgroundImage: detailGameResponses.background_image ?? "",
+      backgroundImageAdditional: detailGameResponses.background_image_additional ?? "",
       website: detailGameResponses.website ?? "",
       rating: detailGameResponses.rating ?? 0.0,
       added: detailGameResponses.added ?? 0,
       playtime: detailGameResponses.playtime ?? 0,
-      achievementsCount: detailGameResponses.achievementsCount ?? 0,
-      ratingsCount: detailGameResponses.ratingsCount ?? 0,
-      suggestionsCount: detailGameResponses.suggestionsCount ?? 0,
-      reviewsCount: detailGameResponses.reviewsCount ?? 0,
+      achievementsCount: detailGameResponses.achievements_count ?? 0,
+      ratingsCount: detailGameResponses.ratings_count ?? 0,
+      suggestionsCount: detailGameResponses.suggestions_count ?? 0,
+      reviewsCount: detailGameResponses.reviews_count ?? 0,
       parentPlatforms: listParentPlatform,
       platforms: listPlatform ,
       stores: listStore,
@@ -817,7 +817,7 @@ final class DetailGameTransformer {
       genres: listGenre,
       tags: listTag,
       publishers: listPublisher,
-      descriptionRaw: detailGameResponses.descriptionRaw ?? ""
+      descriptionRaw: detailGameResponses.description_raw ?? ""
     )
   }
 }

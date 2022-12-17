@@ -26,7 +26,6 @@ public struct GetDevelopersRemoteDataSource : DataSource {
     public func execute(request: Any?) -> AnyPublisher<[DeveloperResult], Error> {
       let param = ["key": apiKey]
         return Future<[DeveloperResult], Error> { completion in
-          print("URL: \(_endpoint)")
           if let url = URL(string: _endpoint) {
             AF.request(
               url,

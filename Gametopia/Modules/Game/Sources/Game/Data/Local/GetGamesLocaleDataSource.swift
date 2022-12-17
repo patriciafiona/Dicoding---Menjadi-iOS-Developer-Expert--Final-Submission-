@@ -26,7 +26,7 @@ public struct GetGamesLocaleDataSource {
       let detailGames: Results<GameModuleEntity> = {
         _realm.objects(GameModuleEntity.self)
           .sorted(byKeyPath: "name", ascending: true)
-      }()
+        }()
       completion(.success(detailGames.toArray(ofType: GameModuleEntity.self)))
     }.eraseToAnyPublisher()
   }
@@ -57,6 +57,7 @@ public struct GetGamesLocaleDataSource {
             temp.desc = game.desc
             temp.released = game.released
             temp.updated = game.updated
+            print("backgroundImage: \(game.backgroundImage)")
             temp.backgroundImage = game.backgroundImage
             temp.backgroundImageAdditional = game.backgroundImageAdditional
             temp.website = game.website

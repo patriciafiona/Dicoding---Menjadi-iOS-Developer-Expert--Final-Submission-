@@ -20,39 +20,15 @@ final class Injection: NSObject {
   
   var realm: Realm! = try! Realm()
   
-  private func provideRepository() -> GametopiaRepositoryProtocol {
-    let realm = try? Realm()
-
-    let locale: LocaleDataSource = LocaleDataSource.sharedInstance(realm)
-    let remote: RemoteDataSource = RemoteDataSource.sharedInstance
-
-    return GametopiaRepository.sharedInstance(locale, remote)
-  }
-
-  func provideHome() -> HomeUseCase {
-    let repository = provideRepository()
-    return HomeInteractor(repository: repository)
-  }
-
-  func provideDetail(id: Int, isAdd: Bool = false) -> DetailUseCase {
-    let repository = provideRepository()
-    return DetailInteractor(repository: repository, id: id, isAdd: isAdd)
-  }
-  
-  func provideDiscoveryByRating() -> DiscoveryByRatingUseCase {
-    let repository = provideRepository()
-    return DiscoveryByRatingInteractor(repository: repository)
-  }
-  
-  func provideMyFavorites() -> MyFavoriteUseCase {
-    let repository = provideRepository()
-    return MyFavoritesInteractor(repository: repository)
-  }
-  
   //From Module
   func provideGame() -> GameInteractor {
     let repository = GetGamesRepository(locale: GetGamesLocaleDataSource(realm: realm), remote: GetGamesRemoteDataSource())
-    return GameInteractor(repository: repository)
+    return GameInteractor(repository: repository, isAdd: false)
+  }
+  
+  func provideDetail(isAdd: Bool = false) -> GameInteractor {
+    let repository = GetGamesRepository(locale: GetGamesLocaleDataSource(realm: realm), remote: GetGamesRemoteDataSource())
+    return GameInteractor(repository: repository, isAdd: isAdd)
   }
   
   func provideGenre() -> GenreInteractor {
