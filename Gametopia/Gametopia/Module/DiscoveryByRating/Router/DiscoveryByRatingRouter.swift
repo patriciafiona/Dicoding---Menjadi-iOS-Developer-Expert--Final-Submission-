@@ -23,7 +23,6 @@ class DiscoveryByRatingRouter {
   }
 
   func makeDetailView(for id: Int, isAdd: Bool = false) -> some View {
-    let detailUseCase = Injection.init().provideDetail(isAdd: true)
     return DetailView(presenter: presenter, favoritePresenter: favoritePresenter, gameId: id, isAdd: isAdd)
   }
   
