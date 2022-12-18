@@ -19,9 +19,10 @@ struct DetailView: View {
   @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
   
   @State var gameId: Int
+  @State var isAdd: Bool
   
   var body: some View {
-    RootContent(presenter: presenter, favoritePresenter: favoritePresenter, gameId: gameId)
+    RootContent(presenter: presenter, favoritePresenter: favoritePresenter, gameId: gameId, isAdd: isAdd)
   }
 }
 
@@ -29,8 +30,10 @@ struct RootContent: View{
   @Environment(\.presentationMode) var presentationMode
   @ObservedObject var presenter: GamePresenter
   @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
-  @State private var isFavorite: Bool = false
+  @State var isFavorite: Bool = false
   @State var gameId: Int
+  @State var isAdd: Bool
+  @State var isUpdateFavorite: Bool = false
   
   var body: some View{
     NavigationView {
@@ -56,12 +59,13 @@ struct RootContent: View{
         }
       })
       .navigationBarItems(trailing: Button {
-        isFavorite = !isFavorite
-        favoritePresenter.updateFavorite(request: nil, id: (presenter.detailGame?.id)!, isFavorite: isFavorite )
-      } label: {
-        Image(systemName: isFavorite == true ? "heart.circle.fill" : "heart.circle")
-          .foregroundColor(isFavorite == true ?.red : .gray)
-      }
+          isFavorite = !isFavorite
+          favoritePresenter.updateFavorite(request: nil, id: (presenter.detailGame?.id)!, isFavorite: isFavorite )
+          isUpdateFavorite = true
+        } label: {
+          Image(systemName: isFavorite == true ? "heart.circle.fill" : "heart.circle")
+            .foregroundColor(isFavorite == true ? .red : .gray)
+        }
         .skeleton(with: presenter.loadingState)
         .shape(type: .circle)
         .appearance(type: .solid(color: .yellow, background: .black))
@@ -71,11 +75,14 @@ struct RootContent: View{
     .phoneOnlyStackNavigationView()
     .statusBar(hidden: true)
     .onAppear {
-      self.presenter.getDetailGame(id: gameId)
+      self.presenter.getDetailGame(id: gameId, isAdd: isAdd)
       self.presenter.objectWillChange.send()
     }
     .onReceive(Just(presenter.detailGame?.isFavorite), perform: { value in
-      self.isFavorite =  presenter.detailGame?.isFavorite ?? false
+      if(!isUpdateFavorite){
+        self.isFavorite =  presenter.detailGame?.isFavorite ?? false
+      }
+      isUpdateFavorite = false
     })
   }
 }
@@ -109,10 +116,8 @@ struct TopSection: View {
               .appearance(type: .solid(color: .yellow, background: .black))
           }
       }
-      
     }
     .frame(height: 450.0)
-    
   }
   
 }

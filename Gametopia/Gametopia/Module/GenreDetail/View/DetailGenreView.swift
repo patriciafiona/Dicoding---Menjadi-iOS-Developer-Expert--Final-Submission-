@@ -105,7 +105,7 @@ struct RootGenreContent: View{
                           ForEach(presenter.detailGenre!.games, id: \.id){ game in
                             ZStack{
                               NavigationLink(
-                                destination: router.makeDetailView(for: game.id ?? 0)
+                                destination: router.makeDetailView(for: game.id ?? 0, isAdd: true)
                               ) {
                                 Text(game.name)
                                   .foregroundColor(.white)

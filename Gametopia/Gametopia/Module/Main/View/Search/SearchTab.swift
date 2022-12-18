@@ -7,16 +7,23 @@
 
 import SwiftUI
 import Kingfisher
+
 import Core
 import Search
+import Favorite
+import Game
+import Genre
 
 struct SearchTab: View {
   @ObservedObject var presenter: GetListPresenter<Any, SearchDomainModel, Interactor<Any, [SearchDomainModel], GetSearchRepository<GetSearchRemoteDataSource, SearchTransformer>>>
+  @ObservedObject var genrePresenter: GenrePresenter
+  @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  @ObservedObject var gamePresenter: GamePresenter
   @State var searchKeyword: String = ""
   @State var isLoading = false
   
   var body: some View {
-    
+    let router = HomeRouter(gamePresenter: gamePresenter, favoritePresenter: favoritePresenter, genrePresenter: genrePresenter)
     VStack(alignment: .leading) {
       ZStack{
         TextField(
@@ -41,12 +48,12 @@ struct SearchTab: View {
             LazyVStack{
               ForEach(presenter.list, id: \.self.id){ game in
                 ZStack {
-                  SearchResultItem(presenter: presenter, game: game)
+                  NavigationLink(
+                    destination: router.makeDetailView(for: game.id ?? 0, isAdd: true)
+                  ) {
+                    SearchResultItem(presenter: presenter, game: game)
+                  }
                  }.buttonStyle(PlainButtonStyle())
-                
-//                self.presenter.linkBuilder(for: game.id!) {
-//                  SearchResultItem(presenter: presenter, game: game)
-//                }.buttonStyle(PlainButtonStyle())
               }
             }
           }

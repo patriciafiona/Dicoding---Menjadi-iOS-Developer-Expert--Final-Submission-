@@ -39,13 +39,21 @@ struct HomeView: View {
                     Text("Home")
                  }
                  .tag(Tabs.tabHome)
-               SearchTab(presenter: searchPresenter)
+               SearchTab(
+                presenter: searchPresenter,
+                genrePresenter: genrePresenter, favoritePresenter: favoritePresenter,
+                gamePresenter: gamePresenter
+               )
                  .tabItem {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
                  }
                  .tag(Tabs.tabSearch)
-                FavoriteTab(presenter: favoritePresenter)
+                FavoriteTab(
+                  presenter: favoritePresenter,
+                  genrePresenter: genrePresenter,
+                  gamePresenter: gamePresenter
+                )
                   .tabItem {
                      Image(systemName: "heart.circle.fill")
                      Text("Favorites")

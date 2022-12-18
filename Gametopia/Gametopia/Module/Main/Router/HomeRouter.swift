@@ -24,8 +24,8 @@ public class HomeRouter {
     self.genrePresenter = genrePresenter
   }
   
-  func makeDetailView(for id: Int) -> some View {
-    return DetailView(presenter: gamePresenter, favoritePresenter: favoritePresenter, gameId: id)
+  func makeDetailView(for id: Int, isAdd: Bool = false) -> some View {
+    return DetailView(presenter: gamePresenter, favoritePresenter: favoritePresenter, gameId: id, isAdd: isAdd)
   }
   
   func makeDiscoverByRatingView() -> some View {

@@ -7,13 +7,19 @@
 
 import SwiftUI
 import Kingfisher
+
 import Core
 import Favorite
+import Game
+import Genre
 
 struct FavoriteTab: View {
-  @ObservedObject var presenter: GetListPresenter<Any, DetailGameDomainModel, Interactor<Any, [DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  @ObservedObject var presenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  @ObservedObject var genrePresenter: GenrePresenter
+  @ObservedObject var gamePresenter: GamePresenter
   
   var body: some View {
+    let router = HomeRouter(gamePresenter: gamePresenter, favoritePresenter: presenter, genrePresenter: genrePresenter)
     ZStack {
       if presenter.isLoading {
         ZStack{
@@ -42,12 +48,12 @@ struct FavoriteTab: View {
           if(!presenter.list.isEmpty){
             LazyVStack{
               ForEach(presenter.list, id: \.self.id){ game in
-//                self.presenter.linkBuilder(for: game.id!) {
-//                  GameFavoriteItem(presenter: presenter, game: game)
-//                }.buttonStyle(PlainButtonStyle())
-                
                 ZStack {
-                  GameFavoriteItem(presenter: presenter, game: game)
+                  NavigationLink(
+                    destination: router.makeDetailView(for: game.id ?? 0, isAdd: true)
+                  ) {
+                    GameFavoriteItem(presenter: presenter, game: game)
+                  }
                 }.buttonStyle(PlainButtonStyle())
               }
             }
@@ -116,8 +122,8 @@ struct FavoriteTab: View {
 }
 
 struct GameFavoriteItem: View{
-  @ObservedObject var presenter: GetListPresenter<Any, DetailGameDomainModel, Interactor<Any, [DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
-    @State var game: DetailGameDomainModel?
+  @ObservedObject var presenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  @State var game: Favorite.DetailGameDomainModel?
     
     var body: some View {
         HStack{

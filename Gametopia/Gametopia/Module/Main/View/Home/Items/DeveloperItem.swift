@@ -11,12 +11,19 @@ import Kingfisher
 
 import Core
 import Developer
+import Game
+import Favorite
+import Genre
 
 struct DeveloperItem: View {
   var developer: DeveloperDomainModel
   @ObservedObject var presenter: GetListPresenter<Any, DeveloperDomainModel, Interactor<Any, [DeveloperDomainModel], GetDevelopersRepository<GetDevelopersLocaleDataSource, GetDevelopersRemoteDataSource, DeveloperTransformer>>>
+  @ObservedObject var genrePresenter: GenrePresenter
+  @ObservedObject var favoritePresenter: GetListPresenter<Any, Favorite.DetailGameDomainModel, Interactor<Any, [Favorite.DetailGameDomainModel], GetFavoritesRepository<GetFavoritesLocaleDataSource, FavoriteTransformer>>>
+  @ObservedObject var gamePresenter: GamePresenter
   
   var body: some View {
+    let router = HomeRouter(gamePresenter: gamePresenter, favoritePresenter: favoritePresenter, genrePresenter: genrePresenter)
     ZStack {
       GeometryReader { geometry in
         KFImage.url(URL(string: (developer.imageBackground) ?? ""))
@@ -36,7 +43,7 @@ struct DeveloperItem: View {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.black, Color.black, Color.black.opacity(0)]), startPoint: .top, endPoint: .bottom)
           )
           .overlay{
-            DeveloperHeaderOverlay(presenter: presenter, developer: developer)
+            DeveloperHeaderOverlay(presenter: presenter, developer: developer, router: router)
           }
       }
     }
@@ -48,6 +55,7 @@ struct DeveloperItem: View {
 private struct DeveloperHeaderOverlay: View{
   @ObservedObject var presenter: GetListPresenter<Any, DeveloperDomainModel, Interactor<Any, [DeveloperDomainModel], GetDevelopersRepository<GetDevelopersLocaleDataSource, GetDevelopersRemoteDataSource, DeveloperTransformer>>>
   var developer: DeveloperDomainModel
+  var router: HomeRouter
   
   var gradient: LinearGradient {
     .linearGradient(
@@ -73,14 +81,12 @@ private struct DeveloperHeaderOverlay: View{
           LazyVStack{
             ForEach(developer.games.prefix(3), id: \.id){ game in
               ZStack {
+                NavigationLink(
+                  destination: router.makeDetailView(for: game.id ?? 0, isAdd: true)
+                ) {
                   DeveloperGameItem(game: game)
+                }
               }.buttonStyle(PlainButtonStyle())
-              
-//              ZStack{
-//                self.presenter.linkDetailFromDeveloperBuilder(for: game.id!) {
-//                  DeveloperGameItem(game: game)
-//                }.buttonStyle(PlainButtonStyle())
-//              }
             }
           }
         }

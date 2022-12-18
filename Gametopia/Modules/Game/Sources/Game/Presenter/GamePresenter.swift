@@ -73,9 +73,9 @@ public class GamePresenter: ObservableObject {
       .store(in: &cancellables)
   }
   
-  public func getDetailGame(id: Int) {
+  public func getDetailGame(id: Int, isAdd: Bool = false) {
     loadingState = true
-    useCase.getDetailGame(id: id)
+    useCase.getDetailGame(id: id, isAdd: isAdd)
       .receive(on: RunLoop.main)
       .sink(receiveCompletion: { completion in
         switch completion {

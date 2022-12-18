@@ -11,7 +11,7 @@ import Combine
 public protocol GameUseCase {
   func getFewDiscoveryGame() -> AnyPublisher<[DetailGameDomainModel], Error>
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameDomainModel], Error>
-  func getDetailGame(id: Int) -> AnyPublisher<DetailGameDomainModel, Error>
+  func getDetailGame(id: Int, isAdd: Bool) -> AnyPublisher<DetailGameDomainModel, Error>
 }
 
 public class GameInteractor: GameUseCase {
@@ -31,8 +31,8 @@ public class GameInteractor: GameUseCase {
     return repository.getAllDiscoveryGame(sortFromBest: sortFromBest)
   }
 
-  public func getDetailGame(id: Int) -> AnyPublisher<DetailGameDomainModel, Error> {
-    return repository.getGameDetail(id: id, isAdd: self.isAdd)
+  public func getDetailGame(id: Int, isAdd: Bool) -> AnyPublisher<DetailGameDomainModel, Error> {
+    return repository.getGameDetail(id: id, isAdd: isAdd)
   }
   
 }
